@@ -8,7 +8,7 @@ import java.util.function.Consumer
 import java.util.logging.Logger
 
 
-class ItemTestSheduler(
+class ItemTestScheduler(
     private val player: Player,
     private val logger: Logger,
     private val item: ItemStack,
@@ -26,10 +26,5 @@ class ItemTestSheduler(
         }
 
     }
-
-//    fun callNewItemEvent(){
-//        val event: NewItem = NewItem(Component.text("Testmessage"))
-//        event.callEvent()
-//    }
 
 }

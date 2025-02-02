@@ -1,4 +1,5 @@
 name: itemHunt
 version: '0.1'
 main: org.nico.itemHunt.ItemHunt
+bootstrapper: org.nico.itemHunt.command.RegisterCommands
 api-version: '1.21'

@@ -1,17 +1,11 @@
-package org.nico.itemHunt.events
+package org.nico.itemHunt.events.events
 
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitScheduler
 
 
-class NewItem(
-    private val players: List<Player>,
-    private val sheduler: BukkitScheduler,
-
-    ): Event() {
+class PlayerObtainedItem: Event() {
 
     private lateinit var newItem: ItemStack
 
