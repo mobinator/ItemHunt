@@ -1,16 +1,18 @@
 package org.nico.itemHunt.events.events
 
+import org.bukkit.Material
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
-import org.bukkit.inventory.ItemStack
 
 
-class PlayerObtainedItem: Event() {
-
-    private lateinit var newItem: ItemStack
+class PlayerObtainedItem(val item: Material): Event() {
 
     companion object{
-        val HANDLER_LIST: HandlerList = HandlerList()
+        @JvmStatic
+        private val HANDLER_LIST: HandlerList = HandlerList()
+
+        @JvmStatic
+        fun getHandlerList(): HandlerList = HANDLER_LIST
     }
 
     override fun getHandlers(): HandlerList {
@@ -18,9 +20,6 @@ class PlayerObtainedItem: Event() {
     }
 
     override fun callEvent(): Boolean {
-
-
-
         return super.callEvent()
     }
 

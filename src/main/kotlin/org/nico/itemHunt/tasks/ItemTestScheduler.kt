@@ -1,9 +1,9 @@
 package org.nico.itemHunt.tasks
 
-import java.util.logging.Level
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitTask
+import org.nico.itemHunt.events.ItemHuntEventHandler
 import java.util.function.Consumer
 import java.util.logging.Logger
 
@@ -11,20 +11,19 @@ import java.util.logging.Logger
 class ItemTestScheduler(
     private val player: Player,
     private val logger: Logger,
-    private val item: ItemStack,
+    var item: ItemStack,
 
     ) : Consumer<BukkitTask?> {
 
     override fun accept(it: BukkitTask?) {
 
-        if (!player.isOnline){
-            it?.cancel()
-        }
+        if (player.isOnline){
 
-        if (item in player.inventory){
-            logger.log(Level.INFO, "Item found: ${item.displayName()}")
+            if (item in player.inventory){
+                player.sendMessage("You have found the Item. Well done!")
+                ItemHuntEventHandler.itemFound(item = item.type)
+            }
         }
-
     }
 
 }

@@ -4,7 +4,7 @@ import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
-import org.nico.itemHunt.events.EventHandler
+import org.nico.itemHunt.events.ItemHuntEventHandler
 
 class StartGame: BasicCommand {
 
@@ -14,7 +14,7 @@ class StartGame: BasicCommand {
 
         sendMessage(name = name)
 
-        EventHandler.startGame()
+        ItemHuntEventHandler.startGame()
 
     }
 
