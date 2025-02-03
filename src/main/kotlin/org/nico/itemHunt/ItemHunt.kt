@@ -1,7 +1,6 @@
 package org.nico.itemHunt
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
@@ -9,13 +8,11 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
-import org.bukkit.scoreboard.DisplaySlot
-import org.bukkit.scoreboard.Scoreboard
-import org.bukkit.scoreboard.Team
 import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.game.GameEventListener
 import org.nico.itemHunt.game.LobbyManager
 import org.nico.itemHunt.inventories.InventoryEventListener
+import org.nico.itemHunt.teams.ItemHuntTeam
 import java.util.logging.Level
 
 
@@ -50,8 +47,6 @@ class ItemHunt : JavaPlugin(), Listener {
 
     @EventHandler
     fun onGameStarted(event: GameStarted) {
-        logger.log(Level.INFO, "Game Started")
-        //unregister LobbyManager
         HandlerList.unregisterAll(lobbyManager)
     }
 

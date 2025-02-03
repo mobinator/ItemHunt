@@ -23,6 +23,9 @@ class ItemTestScheduler(
                 player.sendMessage("You have found the Item. Well done!")
                 ItemHuntEventHandler.itemFound(item = item.type, player = player)
             }
+
+            println("Item to find: $item")
+
         }
     }
 

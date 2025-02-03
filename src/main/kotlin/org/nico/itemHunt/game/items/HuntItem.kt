@@ -13,12 +13,14 @@ object HuntItem {
 
     fun getRandomItem(): ItemStack {
 
-        if (poolSize == 0) {
-            throw IllegalStateException("No item pools added")
-        }
+//        if (poolSize == 0) {
+//            throw IllegalStateException("No item pools added")
+//        }
 
-        val nextItem = Random.nextInt(poolSize)
-        return ItemStack.of(getItemFromPools(nextItem))
+        val materials = Material.entries.filter { it.isItem }
+
+        val nextItem = Random.nextInt(materials.size)
+        return ItemStack.of(materials[nextItem])
     }
 
     fun generateRandomItemList(length: Int): List<ItemStack> {
@@ -45,5 +47,5 @@ object HuntItem {
         }
         return Material.STICK
     }
-
 }
+
