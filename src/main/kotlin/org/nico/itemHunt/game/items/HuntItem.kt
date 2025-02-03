@@ -6,7 +6,8 @@ import kotlin.random.Random
 
 object HuntItem {
 
-    private val itemPools: MutableList<ItemPool> = mutableListOf()
+
+    private var itemPools: MutableList<ItemPool> = mutableListOf()
     private var poolSize = 0
 
 

@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack
 class IncrementInventoryButton(
     material: Material,
     private var name: String,
+    private var state: Int,
+    private val defaultState: Int,
     private val description: String,
     private val stateLabel: String,
     inventory: Inventory,
@@ -16,7 +18,6 @@ class IncrementInventoryButton(
     val onClick: (state: Int) -> Unit
 ) {
 
-    private var state = 30
     private var displayItem = ItemStack.of(material)
 
 
@@ -60,7 +61,7 @@ class IncrementInventoryButton(
                         state -= 10
                     }
                     ClickType.MIDDLE -> {
-                        state = 30
+                        state = defaultState
                     }
                     else -> {
                     }

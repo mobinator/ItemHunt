@@ -3,7 +3,7 @@ package org.nico.itemHunt.game.items
 import org.bukkit.Material
 import org.nico.itemHunt.utils.CsvReader
 
-class ItemPool(private val source: String) {
+class ItemPool(val source: String) {
     val items: MutableList<Material> = mutableListOf()
 
     init {

@@ -1,11 +1,15 @@
 package org.nico.itemHunt.events.events
 
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
 
-class PlayerObtainedItem(val item: Material) : Event() {
+class PlayerObtainedItem(
+    val item: Material,
+    val player: Player
+) : Event() {
 
     companion object {
         @JvmStatic
