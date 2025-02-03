@@ -1,6 +1,7 @@
 package org.nico.itemHunt
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
@@ -8,6 +9,9 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
+import org.bukkit.scoreboard.DisplaySlot
+import org.bukkit.scoreboard.Scoreboard
+import org.bukkit.scoreboard.Team
 import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.game.GameEventListener
 import org.nico.itemHunt.game.LobbyManager
@@ -36,16 +40,12 @@ class ItemHunt : JavaPlugin(), Listener {
         sheduler = server.scheduler
 
         logger.log(Level.INFO, "Initilizing Itemhunt Version ${description.version}")
-
-    }
-
-    override fun onDisable() {
-
     }
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        event.player.sendMessage(Component.text("Hello, ${event.player.name}"))
+        val player = event.player
+        player.sendMessage(Component.text("Hello, ${event.player.name}"))
     }
 
     @EventHandler
@@ -54,4 +54,6 @@ class ItemHunt : JavaPlugin(), Listener {
         //unregister LobbyManager
         HandlerList.unregisterAll(lobbyManager)
     }
+
+    override fun onDisable() {}
 }

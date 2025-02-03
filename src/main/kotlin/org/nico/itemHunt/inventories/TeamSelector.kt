@@ -8,8 +8,9 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.inventories.buttons.SelectableItem
+import org.nico.itemHunt.teams.ItemHuntTeam
 
-class TeamSelector(player: Player): InventoryHolder {
+class TeamSelector(val player: Player): InventoryHolder {
 
     private var inventory: Inventory = Bukkit.createInventory(
         this,
@@ -33,19 +34,27 @@ class TeamSelector(player: Player): InventoryHolder {
             ItemStack.of(Material.LIME_WOOL),
             ItemStack.of(Material.YELLOW_WOOL),
             ItemStack.of(Material.ORANGE_WOOL),
-        ).forEachIndexed() { index, item ->
-            val selectedItem = item.clone()
-            selectedItem.editMeta {
-                it.setEnchantmentGlintOverride(true)
-            }
-            SelectableItem(
-                selectedItem = selectedItem,
-                deselectedItem = item,
-                isSelected = false,
-                inventory = inventory,
-                pos = index,
-                onSelect = {},
-            )
+        )
+            .forEachIndexed() { index, item ->
+                val selectedItem = item.clone()
+                selectedItem.editMeta {
+                    it.setEnchantmentGlintOverride(true)
+                }
+                val team = ItemHuntTeam.teams[index]
+                SelectableItem(
+                    selectedItem = selectedItem,
+                    deselectedItem = item,
+                    isSelected = team.isMember(player),
+                    inventory = inventory,
+                    pos = index,
+                    onSelect = {
+                        if (it){
+                            team.addPlayer(player)
+                        } else {
+                            team.removePlayer(player)
+                        }
+                    },
+                )
         }
     }
 
