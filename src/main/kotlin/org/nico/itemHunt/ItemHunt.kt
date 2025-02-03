@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.broadcast
 import org.bukkit.Material
-import org.bukkit.Tag
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -17,7 +16,6 @@ import org.nico.itemHunt.events.events.PlayerObtainedItem
 import org.nico.itemHunt.game.HuntItem
 import org.nico.itemHunt.inventories.InventoryEventListener
 import org.nico.itemHunt.tasks.ItemTestScheduler
-import java.io.File
 import java.util.logging.Level
 
 
@@ -27,7 +25,6 @@ class ItemHunt : JavaPlugin(), Listener {
     var players: List<Player> = emptyList()
     private var shedules: List<ItemTestScheduler> = emptyList()
 
-    var huntItems: List<Tag<Material>> = emptyList()
 
     override fun onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this)
@@ -36,11 +33,10 @@ class ItemHunt : JavaPlugin(), Listener {
         sheduler = server.scheduler
 
         logger.log(Level.INFO, "Initilizing Itemhunt Version ${description.version}")
-
     }
 
     override fun onDisable() {
-        // Plugin shutdown logic
+
     }
 
     @EventHandler
