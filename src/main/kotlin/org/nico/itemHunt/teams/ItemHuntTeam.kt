@@ -20,7 +20,9 @@ class ItemHuntTeam(
             if (team.isMember(player))
                 team.removePlayer(player)
         }
-        player.displayName(Component.text(player.name, teamColor))
+        player.displayName(
+            Component.text(player.name, teamColor)
+        )
     }
 
 
