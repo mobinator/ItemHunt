@@ -2,11 +2,8 @@ package org.nico.itemHunt.command.commands
 
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
-import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
-import org.nico.itemHunt.inventories.SelectItemTagsMenu
+import org.nico.itemHunt.inventories.Settings
 
 class MenuCommand : BasicCommand {
 
@@ -16,7 +13,7 @@ class MenuCommand : BasicCommand {
         if (commandSourceStack.executor is Player){
             val player = commandSourceStack.executor as Player
 
-            val inventory = SelectItemTagsMenu()
+            val inventory = Settings()
 
             player.openInventory(inventory.inventory)
 

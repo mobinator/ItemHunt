@@ -1,4 +1,4 @@
-package org.nico.itemHunt.game
+package org.nico.itemHunt.game.items
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack

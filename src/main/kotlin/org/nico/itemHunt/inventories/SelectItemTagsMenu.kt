@@ -1,12 +1,9 @@
 package org.nico.itemHunt.inventories
 
-import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
-import org.bukkit.inventory.ItemStack
-import org.nico.itemHunt.game.HuntItem
+import org.nico.itemHunt.game.items.HuntItem
 
 class SelectItemTagsMenu: InventoryHolder {
 
