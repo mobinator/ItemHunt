@@ -17,9 +17,9 @@ class ItemTestScheduler(
 
     override fun accept(it: BukkitTask?) {
 
-        if (player.isOnline){
+        if (player.isOnline) {
 
-            if (item in player.inventory){
+            if (item in player.inventory) {
                 player.sendMessage("You have found the Item. Well done!")
                 ItemHuntEventHandler.itemFound(item = item.type)
             }

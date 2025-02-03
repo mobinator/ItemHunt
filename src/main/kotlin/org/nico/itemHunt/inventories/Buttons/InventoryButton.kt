@@ -1,16 +1,13 @@
 package org.nico.itemHunt.inventories.Buttons
 
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.ItemHunt
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.TextColor
-import org.bukkit.event.inventory.ClickType
 
 
 class InventoryButton(
@@ -19,7 +16,7 @@ class InventoryButton(
     private val pos: Int,
     val state: () -> ItemStack,
     val onClick: (clickType: ClickType) -> Unit
-): Listener {
+) : Listener {
 
 
     init {
@@ -32,7 +29,11 @@ class InventoryButton(
 
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
-        if ((event.currentItem in listOf(displayItem.invoke(), state.invoke())) && event.clickedInventory == inventory) {
+        if ((event.currentItem in listOf(
+                displayItem.invoke(),
+                state.invoke()
+            )) && event.clickedInventory == inventory
+        ) {
 
             event.isCancelled = true
 

@@ -7,9 +7,9 @@ import org.bukkit.inventory.InventoryHolder
 import org.nico.itemHunt.inventories.Buttons.IncrementInventoryButton
 import org.nico.itemHunt.inventories.Buttons.ToggleInventoryButton
 
-class Settings: InventoryHolder {
+class Settings : InventoryHolder {
 
-    private var inventory: Inventory = Bukkit.createInventory(this, 9*2)
+    private var inventory: Inventory = Bukkit.createInventory(this, 9 * 2)
 
     init {
         //Settings:
@@ -65,7 +65,6 @@ class Settings: InventoryHolder {
         ) { state, item ->
             println("Chain mode button clicked")
         }
-
 
 
     }

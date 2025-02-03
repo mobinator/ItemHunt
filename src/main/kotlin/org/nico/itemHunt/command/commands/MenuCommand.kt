@@ -10,7 +10,7 @@ class MenuCommand : BasicCommand {
 
     override fun execute(commandSourceStack: CommandSourceStack, args: Array<String>) {
 
-        if (commandSourceStack.executor is Player){
+        if (commandSourceStack.executor is Player) {
             val player = commandSourceStack.executor as Player
 
             val inventory = Settings()

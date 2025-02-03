@@ -5,9 +5,9 @@ import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
 
-class PlayerObtainedItem(val item: Material): Event() {
+class PlayerObtainedItem(val item: Material) : Event() {
 
-    companion object{
+    companion object {
         @JvmStatic
         private val HANDLER_LIST: HandlerList = HandlerList()
 
@@ -17,10 +17,6 @@ class PlayerObtainedItem(val item: Material): Event() {
 
     override fun getHandlers(): HandlerList {
         return HANDLER_LIST
-    }
-
-    override fun callEvent(): Boolean {
-        return super.callEvent()
     }
 
 }

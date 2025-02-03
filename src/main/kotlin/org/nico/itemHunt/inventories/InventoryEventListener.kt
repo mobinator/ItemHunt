@@ -5,14 +5,14 @@ import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 
 
-class InventoryEventListener: Listener {
+class InventoryEventListener : Listener {
 
     @EventHandler
-    fun onInventoryClick(event: InventoryClickEvent){
+    fun onInventoryClick(event: InventoryClickEvent) {
 
         if (event.clickedInventory == null || event.clickedInventory?.getHolder(false) !is SelectItemTagsMenu) {
             return
-        }else{
+        } else {
             val inventory = event.clickedInventory?.getHolder(false) as SelectItemTagsMenu
 
             event.isCancelled = true

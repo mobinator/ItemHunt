@@ -7,19 +7,19 @@ import org.nico.itemHunt.events.events.PlayerObtainedItem
 
 object ItemHuntEventHandler {
 
-    fun startGame(){
+    fun startGame() {
         callEvent(
             GameStarted()
         )
     }
 
-    fun itemFound(item: Material){
+    fun itemFound(item: Material) {
         callEvent(
             PlayerObtainedItem(item)
         )
     }
 
-    private fun callEvent(event: Event){
+    private fun callEvent(event: Event) {
         event.callEvent()
     }
 }

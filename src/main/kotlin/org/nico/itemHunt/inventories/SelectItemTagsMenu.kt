@@ -5,13 +5,13 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.nico.itemHunt.game.items.HuntItem
 
-class SelectItemTagsMenu: InventoryHolder {
+class SelectItemTagsMenu : InventoryHolder {
 
-    private var inventory: Inventory = Bukkit.createInventory(this, 9*6)
+    private var inventory: Inventory = Bukkit.createInventory(this, 9 * 6)
 
     init {
 
-        var items = HuntItem.generateRandomItemList(9*6)
+        var items = HuntItem.generateRandomItemList(9 * 6)
 
 //        val previousPage = ItemStack.of(Material.ARROW)
 //        val nextPage = ItemStack.of(Material.DIAMOND_SWORD)

@@ -10,7 +10,7 @@ object HuntItem {
     private var poolSize = 0
 
 
-    fun getRandomItem(): ItemStack{
+    fun getRandomItem(): ItemStack {
 
         if (poolSize == 0) {
             throw IllegalStateException("No item pools added")
@@ -21,7 +21,7 @@ object HuntItem {
     }
 
     fun generateRandomItemList(length: Int): List<ItemStack> {
-    return List(length) { getRandomItem() }
+        return List(length) { getRandomItem() }
     }
 
     fun addPool(itemPoolSource: String): HuntItem {
@@ -31,14 +31,14 @@ object HuntItem {
         return this
     }
 
-    private fun getItemFromPools(index: Int): Material{
+    private fun getItemFromPools(index: Int): Material {
 
         var index = index
 
         itemPools.forEach {
             if (index < it.items.size) {
                 return it.items[index]
-            }else{
+            } else {
                 index -= it.items.size
             }
         }

@@ -3,9 +3,9 @@ package org.nico.itemHunt.events.events
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class GameStarted: Event() {
+class GameStarted : Event() {
 
-    companion object{
+    companion object {
         @JvmStatic
         private val HANDLER_LIST: HandlerList = HandlerList()
 
@@ -15,10 +15,6 @@ class GameStarted: Event() {
 
     override fun getHandlers(): HandlerList {
         return HANDLER_LIST
-    }
-
-    override fun callEvent(): Boolean {
-        return super.callEvent()
     }
 
 }

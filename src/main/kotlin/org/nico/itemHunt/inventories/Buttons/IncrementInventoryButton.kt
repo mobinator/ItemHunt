@@ -1,10 +1,10 @@
 package org.nico.itemHunt.inventories.Buttons
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
+import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import net.kyori.adventure.text.Component
-import org.bukkit.event.inventory.ClickType
 
 class IncrementInventoryButton(
     private val material: Material,
@@ -26,7 +26,8 @@ class IncrementInventoryButton(
             displayItem = {
                 displayItem.editMeta {
                     it.displayName(Component.text(name))
-                    it.lore("$description \n Current State: $state".split("\n").map { line -> Component.text(line.trim()) })
+                    it.lore(
+                        "$description \n Current State: $state".split("\n").map { line -> Component.text(line.trim()) })
                     it.setCustomModelData(pos)
                 }
                 displayItem
@@ -37,7 +38,9 @@ class IncrementInventoryButton(
                 val stateItem = ItemStack.of(Material.PAPER)
                 stateItem.editMeta {
                     it.displayName(Component.text("$stateLabel: $state"))
-                    it.lore("Normal Click +/- 1 \n Shift Click +/- 10 \n Middle-Click to reset".split("\n").map { line -> Component.text(line.trim()) })
+                    it.lore(
+                        "Normal Click +/- 1 \n Shift Click +/- 10 \n Middle-Click to reset".split("\n")
+                            .map { line -> Component.text(line.trim()) })
                     it.setCustomModelData(pos)
                 }
                 stateItem
