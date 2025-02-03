@@ -14,40 +14,32 @@ import org.bukkit.event.inventory.ClickType
 
 
 class InventoryButton(
-    private val material: Material,
-    private var name: String,
+    val displayItem: () -> ItemStack,
     private val inventory: Inventory,
     private val pos: Int,
-    val state: () -> ItemStack?,
+    val state: () -> ItemStack,
     val onClick: (clickType: ClickType) -> Unit
 ): Listener {
 
-    var displayItem: ItemStack = ItemStack.of(material)
 
     init {
         Bukkit.getPluginManager().registerEvents(this, ItemHunt.instance)
 
-        displayItem.editMeta {
-            it.displayName(Component.text(name))
-        }
-
-        inventory.setItem(pos, displayItem)
+        inventory.setItem(pos, displayItem.invoke())
         inventory.setItem(pos + 9, state.invoke())
 
     }
 
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
-        if (event.currentItem == displayItem && event.clickedInventory == inventory) {
+        if ((event.currentItem in listOf(displayItem.invoke(), state.invoke())) && event.clickedInventory == inventory) {
 
             event.isCancelled = true
 
-            println("Button clicked ${displayItem.type}")
-
             onClick(event.click)
 
+            inventory.setItem(pos, displayItem.invoke())
             inventory.setItem(pos + 9, state.invoke())
-
         }
     }
 }

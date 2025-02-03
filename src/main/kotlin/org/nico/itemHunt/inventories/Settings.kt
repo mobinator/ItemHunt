@@ -4,11 +4,12 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
+import org.nico.itemHunt.inventories.Buttons.IncrementInventoryButton
 import org.nico.itemHunt.inventories.Buttons.ToggleInventoryButton
 
 class Settings: InventoryHolder {
 
-    private var inventory: Inventory = Bukkit.createInventory(this, 9*3)
+    private var inventory: Inventory = Bukkit.createInventory(this, 9*2)
 
     init {
         //Settings:
@@ -18,11 +19,13 @@ class Settings: InventoryHolder {
         // - Backpacks
         // - Chain Mode
 
-        var gameDurationButton = ToggleInventoryButton(
+        var gameDurationButton = IncrementInventoryButton(
             material = Material.CLOCK,
             name = "Game Duration",
+            description = "The duration of the game \n L-Click to increase \n R-Click to decrease",
+            stateLabel = "Duration",
             inventory = inventory,
-            pos = 0
+            pos = 0,
         ) { state, item ->
             println("Game duration button clicked")
         }
