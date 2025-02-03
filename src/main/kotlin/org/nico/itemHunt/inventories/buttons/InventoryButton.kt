@@ -16,31 +16,30 @@ class InventoryButton(
     private val pos: Int,
     val state: () -> ItemStack,
     val onClick: (clickType: ClickType) -> Unit
-) : Listener {
+) {
 
 
     init {
-        Bukkit.getPluginManager().registerEvents(this, ItemHunt.instance)
 
-        inventory.setItem(pos, displayItem.invoke())
+        ClickableItem(
+            displayItem = displayItem,
+            inventory = inventory,
+            pos = pos,
+            onClick = {
+                onClick(it)
+                inventory.setItem(pos + 9, state.invoke())
+            }
+        )
+
+        ClickableItem(
+            displayItem = state,
+            inventory = inventory,
+            pos = pos + 9,
+            onClick = {
+                onClick(it)
+                inventory.setItem(pos , displayItem.invoke())
+            }
+        )
         inventory.setItem(pos + 9, state.invoke())
-
-    }
-
-    @EventHandler
-    fun onInventoryClick(event: InventoryClickEvent) {
-        if ((event.currentItem in listOf(
-                displayItem.invoke(),
-                state.invoke()
-            )) && event.clickedInventory == inventory
-        ) {
-
-            event.isCancelled = true
-
-            onClick(event.click)
-
-            inventory.setItem(pos, displayItem.invoke())
-            inventory.setItem(pos + 9, state.invoke())
-        }
     }
 }

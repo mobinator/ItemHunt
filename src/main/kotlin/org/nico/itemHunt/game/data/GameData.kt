@@ -8,7 +8,7 @@ class GameData {
         var itemsToFind = 5
         var backpacks = false
         var chainMode = false
-        var currenGamePhase = GamePhase.LOBBY
+        var currentGamePhase = GamePhase.LOBBY
     }
 }
 

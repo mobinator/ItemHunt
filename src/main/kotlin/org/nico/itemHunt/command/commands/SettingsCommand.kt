@@ -5,7 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import org.bukkit.entity.Player
 import org.nico.itemHunt.inventories.Settings
 
-class MenuCommand : BasicCommand {
+class SettingsCommand : BasicCommand {
 
 
     override fun execute(commandSourceStack: CommandSourceStack, args: Array<String>) {

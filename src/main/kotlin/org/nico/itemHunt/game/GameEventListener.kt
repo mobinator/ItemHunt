@@ -38,7 +38,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             plugin.sheduler.runTaskTimer(plugin, it, 0, 20)
         }
 
-        lookForNewItem()
+//        lookForNewItem()
     }
 
     @EventHandler
