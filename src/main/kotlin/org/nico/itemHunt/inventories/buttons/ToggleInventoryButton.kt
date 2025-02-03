@@ -1,4 +1,4 @@
-package org.nico.itemHunt.inventories.Buttons
+package org.nico.itemHunt.inventories.buttons
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
@@ -8,17 +8,17 @@ import org.bukkit.inventory.ItemStack
 
 
 class ToggleInventoryButton(
-    private val material: Material,
+    material: Material,
     private var name: String,
-    private val inventory: Inventory,
+    var state: Boolean,
+    inventory: Inventory,
     private val pos: Int,
-    val onClick: (state: Boolean, item: ItemStack) -> Unit
+    val onClick: (state: Boolean) -> Unit
 ) {
 
     private var displayItem = ItemStack.of(material)
     private var enabledItem = ItemStack.of(Material.LIME_STAINED_GLASS_PANE)
     private var disabledItem = ItemStack.of(Material.RED_STAINED_GLASS_PANE)
-    var state = disabledItem
 
     init {
 
@@ -28,30 +28,28 @@ class ToggleInventoryButton(
         }
 
         enabledItem.editMeta {
-            it.displayName(Component.text("Enabled", TextColor { 0x00FF00 }))
+            it.displayName(Component.text("Enabled") { 0x00FF00 })
             it.setCustomModelData(pos)
         }
 
         disabledItem.editMeta {
-            it.displayName(Component.text("Disabled", TextColor { 0xFF0000 }))
+            it.displayName(Component.text("Disabled") { 0xFF0000 })
             it.setCustomModelData(pos)
         }
 
-        var button = InventoryButton(
+        InventoryButton(
             displayItem = { displayItem },
             inventory = inventory,
             pos = pos,
             state = {
-                state
+                if (state) enabledItem else disabledItem
             }
         ) {
-            handleClick()
+            state = !state
+            onClick(state)
         }
 
     }
 
-    fun handleClick() {
-        state = if (state == enabledItem) disabledItem else enabledItem
-    }
 
 }

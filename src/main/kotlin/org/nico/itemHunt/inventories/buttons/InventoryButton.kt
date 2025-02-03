@@ -1,4 +1,4 @@
-package org.nico.itemHunt.inventories.Buttons
+package org.nico.itemHunt.inventories.buttons
 
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler

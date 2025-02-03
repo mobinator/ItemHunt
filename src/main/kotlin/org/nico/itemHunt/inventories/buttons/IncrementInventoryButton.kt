@@ -1,4 +1,4 @@
-package org.nico.itemHunt.inventories.Buttons
+package org.nico.itemHunt.inventories.buttons
 
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
@@ -7,16 +7,16 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 class IncrementInventoryButton(
-    private val material: Material,
+    material: Material,
     private var name: String,
     private val description: String,
     private val stateLabel: String,
-    private val inventory: Inventory,
+    inventory: Inventory,
     private val pos: Int,
-    val onClick: (state: Int, item: ItemStack) -> Unit
+    val onClick: (state: Int) -> Unit
 ) {
 
-    var state = 30
+    private var state = 30
     private var displayItem = ItemStack.of(material)
 
 
@@ -46,17 +46,26 @@ class IncrementInventoryButton(
                 stateItem
             },
             onClick = {
-                if (it == ClickType.LEFT) {
-                    state++
-                } else if (it == ClickType.RIGHT) {
-                    state--
-                } else if (it == ClickType.SHIFT_LEFT) {
-                    state += 10
-                } else if (it == ClickType.SHIFT_RIGHT) {
-                    state -= 10
-                } else if (it == ClickType.MIDDLE) {
-                    state = 30
+                when (it) {
+                    ClickType.LEFT -> {
+                        state++
+                    }
+                    ClickType.RIGHT -> {
+                        state--
+                    }
+                    ClickType.SHIFT_LEFT -> {
+                        state += 10
+                    }
+                    ClickType.SHIFT_RIGHT -> {
+                        state -= 10
+                    }
+                    ClickType.MIDDLE -> {
+                        state = 30
+                    }
+                    else -> {
+                    }
                 }
+                onClick(state)
             }
         )
     }
