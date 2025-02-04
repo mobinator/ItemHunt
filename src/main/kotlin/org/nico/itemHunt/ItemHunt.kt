@@ -19,7 +19,6 @@ import java.util.logging.Level
 class ItemHunt : JavaPlugin(), Listener {
 
     lateinit var sheduler: BukkitScheduler
-    private val lobbyManager: LobbyManager = LobbyManager()
 
     companion object {
         lateinit var instance: ItemHunt
@@ -32,7 +31,7 @@ class ItemHunt : JavaPlugin(), Listener {
         Bukkit.getPluginManager().registerEvents(this, this)
         Bukkit.getPluginManager().registerEvents(InventoryEventListener(), this)
         Bukkit.getPluginManager().registerEvents(GameEventListener(this), this)
-        Bukkit.getPluginManager().registerEvents(lobbyManager, this)
+        Bukkit.getPluginManager().registerEvents(LobbyManager(), this)
 
         sheduler = server.scheduler
 
@@ -43,11 +42,6 @@ class ItemHunt : JavaPlugin(), Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
         player.sendMessage(Component.text("Hello, ${event.player.name}"))
-    }
-
-    @EventHandler
-    fun onGameStarted(event: GameStarted) {
-        HandlerList.unregisterAll(lobbyManager)
     }
 
     override fun onDisable() {}

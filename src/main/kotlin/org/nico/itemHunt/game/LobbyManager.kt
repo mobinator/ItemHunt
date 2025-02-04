@@ -1,10 +1,12 @@
 package org.nico.itemHunt.game
 
 
+import net.kyori.adventure.text.Component
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -15,10 +17,27 @@ import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.ItemStack
+import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.inventories.Settings
 import org.nico.itemHunt.inventories.TeamSelector
 
 class LobbyManager : Listener {
+
+    private val settingsItem = ItemStack(Material.COMPASS)
+    private val teamItem = ItemStack(Material.RED_BED)
+    private val itemSelectionItem = ItemStack(Material.CHEST)
+
+    init {
+        settingsItem.editMeta{
+            it.displayName(Component.text("Settings"))
+        }
+        teamItem.editMeta{
+            it.displayName(Component.text("Team Selector"))
+        }
+        itemSelectionItem.editMeta{
+            it.displayName(Component.text("Item Selection"))
+        }
+    }
 
 
     @EventHandler
@@ -33,15 +52,17 @@ class LobbyManager : Listener {
         val player = event.player
         val item = event.item ?: return
 
-        if (item.type == Material.COMPASS) {
+        if (item.type == settingsItem.type) {
 
             var settings = Settings()
             player.openInventory(settings.inventory)
 
-        } else if (item.type == Material.RED_BED) {
+        } else if (item.type == teamItem.type) {
 
             var teamSelector = TeamSelector(player)
             player.openInventory(teamSelector.inventory)
+        }else if (item.type == itemSelectionItem.type) {
+            player.sendMessage("Not implemented yet")
         }
 
         setHotBar(player)
@@ -85,10 +106,20 @@ class LobbyManager : Listener {
         event.isCancelled = true
     }
 
+    @EventHandler
+    fun onGameStarted(event: GameStarted) {
+        HandlerList.unregisterAll(this)
+    }
+
     fun setHotBar(player: Player) {
         player.inventory.clear()
-        player.inventory.setItem(3, ItemStack(Material.COMPASS))
-        player.inventory.setItem(5, ItemStack(Material.RED_BED))
+        if (player.isOp){
+            player.inventory.setItem(2, settingsItem)
+            player.inventory.setItem(4, itemSelectionItem)
+            player.inventory.setItem(6, teamItem)
+        } else {
+            player.inventory.setItem(4, teamItem)
+        }
     }
 
 }

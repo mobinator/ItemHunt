@@ -67,9 +67,7 @@ class ItemHuntTeam(
                 logger = plugin.logger,
                 item = ItemStack.of(Material.BEDROCK)
             )
-        schedules.add(
-            schedule
-        )
+        schedules.add(schedule)
         plugin.sheduler.runTaskTimer(plugin, schedule, 0, 20)
     }
 
@@ -90,9 +88,9 @@ class ItemHuntTeam(
 
     fun nextItem() {
         val newItem = HuntItem.getRandomItem()
-        players.forEach { player ->
-            player.sendMessage("New item: ${newItem.type}")
-        }
+
+        broadcastMessage("New item: ${newItem.type}")
+
         schedules.forEach { schedule ->
             schedule.item = newItem
         }

@@ -9,6 +9,8 @@ object HuntItem {
 
     private var itemPools: MutableList<ItemPool> = mutableListOf()
     private var poolSize = 0
+    val materials = Material.entries.filter { it.isItem }
+
 
 
     fun getRandomItem(): ItemStack {
@@ -16,8 +18,6 @@ object HuntItem {
 //        if (poolSize == 0) {
 //            throw IllegalStateException("No item pools added")
 //        }
-
-        val materials = Material.entries.filter { it.isItem }
 
         val nextItem = Random.nextInt(materials.size)
         return ItemStack.of(materials[nextItem])
