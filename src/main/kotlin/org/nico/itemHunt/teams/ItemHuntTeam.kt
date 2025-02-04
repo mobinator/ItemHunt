@@ -54,9 +54,10 @@ class ItemHuntTeam(
         score = 0
     }
 
-    fun broadcastMessage(message: String) {
+    fun broadcastMessage(message: String, playerToExclude: Player? = null) {
         players.forEach { player ->
-            player.sendMessage(message)
+            if (player != playerToExclude)
+                player.sendMessage(message)
         }
     }
 
@@ -72,11 +73,22 @@ class ItemHuntTeam(
         plugin.sheduler.runTaskTimer(plugin, schedule, 0, 20)
     }
 
-    fun itemFound(){
-        lookForNewItem()
+    fun itemFound(player: Player? = null) {
+        player?.sendMessage("${player.name} has found the item")
+        nextItem()
+        updateDisplayName()
+        println(score)
     }
 
-    private fun lookForNewItem() {
+    fun updateDisplayName() {
+        players.forEachIndexed() { index, player ->
+            players[index].displayName(
+                Component.text(player.name, teamColor)
+            )
+        }
+    }
+
+    fun nextItem() {
         val newItem = HuntItem.getRandomItem()
         players.forEach { player ->
             player.sendMessage("New item: ${newItem.type}")

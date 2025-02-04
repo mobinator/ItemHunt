@@ -1,7 +1,5 @@
 package org.nico.itemHunt.game
 
-import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit.broadcast
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -9,7 +7,6 @@ import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.events.events.PlayerObtainedItem
 import org.nico.itemHunt.teams.ItemHuntTeam
-import org.nico.itemHunt.teams.ItemHuntTeam.Companion.playersWithoutTeams
 import java.util.logging.Level
 
 class GameEventListener(private val plugin: ItemHunt) : Listener {
@@ -28,7 +25,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         ItemHuntTeam.teams.forEach { team ->
             if (team.players.isNotEmpty()) {
                 team.resetScore()
-                team.itemFound()
+                team.nextItem()
             }
         }
     }
@@ -38,7 +35,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         ItemHuntTeam.teams.forEach { team ->
             if (team.isMember(event.player)) {
                 team.addScore(1)
-                team.itemFound()
+                team.itemFound(event.player)
             }
         }
     }
