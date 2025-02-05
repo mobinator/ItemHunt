@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
 import org.nico.itemHunt.game.GameEventListener
 import org.nico.itemHunt.game.LobbyManager
-import org.nico.itemHunt.game.items.HuntItem
 import org.nico.itemHunt.inventories.InventoryEventListener
 import java.util.logging.Level
 

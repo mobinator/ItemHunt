@@ -25,19 +25,19 @@ class ToggleInventoryButton(
         displayItem.editMeta {
             it.displayName(Component.text(name))
             it.setCustomModelData(pos)
-            it.lore(description?.split("\n")?.map {text -> Component.text(text) })
+            it.lore(description?.split("\n")?.map { text -> Component.text(text) })
         }
 
         enabledItem.editMeta {
             it.displayName(Component.text("Enabled") { 0x00FF00 })
             it.setCustomModelData(pos)
-            it.lore(description?.split("\n")?.map {text -> Component.text(text) })
+            it.lore(description?.split("\n")?.map { text -> Component.text(text) })
         }
 
         disabledItem.editMeta {
             it.displayName(Component.text("Disabled") { 0xFF0000 })
             it.setCustomModelData(pos)
-            it.lore(description?.split("\n")?.map {text -> Component.text(text) })
+            it.lore(description?.split("\n")?.map { text -> Component.text(text) })
         }
 
         InventoryButton(
