@@ -1,6 +1,7 @@
 package org.nico.itemHunt
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -38,7 +39,9 @@ class ItemHunt : JavaPlugin(), Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
-        player.sendMessage(Component.text("Hello, ${event.player.name}"))
+        player.displayName(Component.text(player.name, NamedTextColor.WHITE))
+        player.playerListName(Component.text(player.name, NamedTextColor.WHITE))
+        player.sendMessage(Component.text("Hello, ${player.name}"))
     }
 
     override fun onDisable() {}

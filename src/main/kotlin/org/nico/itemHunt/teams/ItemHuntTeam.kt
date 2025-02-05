@@ -122,13 +122,19 @@ class ItemHuntTeam(
     }
 
     fun nextItem() {
-        val newItem = HuntItem.getRandomItem()
+        val newItem = HuntItem.nextItem(this)
 
         broadcastMessage("New item: ${newItem.type}")
 
         schedules.forEach { schedule ->
             schedule.item = newItem
         }
+    }
+
+    fun reset() {
+        resetScore()
+        updateDisplayName()
+        schedules.forEach { it.item = ItemStack.of(Material.BEDROCK) }
     }
 
     companion object {

@@ -3,6 +3,7 @@ package org.nico.itemHunt.game.items
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.game.data.GameData
+import org.nico.itemHunt.teams.ItemHuntTeam
 import org.nico.itemHunt.utils.CsvReader
 import kotlin.random.Random
 
@@ -14,6 +15,24 @@ object HuntItem {
     //generating this takes a lot of time
     //that's why it's lazy
     private val materials by lazy { Material.entries.filter { it.isItem && !it.isLegacy } }
+
+    fun nextItem(team: ItemHuntTeam): ItemStack {
+
+        var item = getRandomItem()
+
+        if(GameData.chainMode){
+
+            if(GameData.itemQueue.size >= team.score +1){
+                item = GameData.itemQueue[team.score]
+            } else {
+                item = getRandomItem()
+                GameData.itemQueue.add(item)
+            }
+
+        }
+        println(GameData.itemQueue)
+        return item
+    }
 
     fun getRandomItem(): ItemStack {
         return if (itemPools.isNotEmpty()) {

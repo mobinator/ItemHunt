@@ -22,10 +22,8 @@ class ItemTestScheduler(
 
             if (item.type in player.inventory.map { it?.type ?: Material.AIR }) {
                 player.sendMessage("You have found the Item. Well done!")
-                ItemHuntEventHandler.itemFound(item = item.type, player = player)
-                player.inventory.remove(item)
+                ItemHuntEventHandler.itemFound(item = item, player = player)
             }
         }
     }
-
 }

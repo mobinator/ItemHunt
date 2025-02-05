@@ -11,6 +11,7 @@ import org.bukkit.event.Listener
 import org.bukkit.scheduler.BukkitRunnable
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.events.GameEnded
+import org.nico.itemHunt.events.events.GameReset
 import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.events.events.PlayerObtainedItem
 import org.nico.itemHunt.game.data.GameData
@@ -59,7 +60,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
                 team.addScore(1)
                 team.itemFound(event.player)
                 if (GameData.deleteItemWhenFound)
-                    removeItem(event.player, event.item, 1)
+                    event.player.inventory.removeItem(event.item)
             }
         }
     }
@@ -74,6 +75,18 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         GameData.currentGamePhase = GamePhase.STOPPED
 
         staggeredPostGameSummary()
+    }
+
+    @EventHandler
+    fun onGameReset(event: GameReset) {
+        players.forEach { player ->
+            player.gameMode = GameMode.ADVENTURE
+        }
+        GameData.currentGamePhase = GamePhase.LOBBY
+        ItemHuntTeam.teams.forEach { team ->
+            team.reset()
+        }
+        Bukkit.getPluginManager().registerEvents(LobbyManager(), plugin)
     }
 
     private fun teleportToSpawn(player: Player) {

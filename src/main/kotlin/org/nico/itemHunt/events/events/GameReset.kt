@@ -1,16 +1,9 @@
 package org.nico.itemHunt.events.events
 
-import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
-import org.bukkit.inventory.ItemStack
 
-
-class PlayerObtainedItem(
-    val item: ItemStack,
-    val player: Player
-) : Event() {
+class GameReset : Event() {
 
     companion object {
         @JvmStatic
