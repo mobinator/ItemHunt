@@ -46,7 +46,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             if (team.players.isNotEmpty()) {
                 team.resetScore()
                 if (GameData.listMode) {
-                    team.itemList = ItemList(HuntItem.generateRandomItemList(GameData.itemsToFind))
+                    team.itemList = ItemList(HuntItem.generateRandomItemList(GameData.itemsToFind).toMutableList())
                 } else {
                     team.itemList = null
                 }

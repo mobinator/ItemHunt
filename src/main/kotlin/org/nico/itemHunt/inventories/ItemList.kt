@@ -9,30 +9,38 @@ import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.inventories.buttons.SelectableItem
 import kotlin.math.ceil
 
-class ItemList(val items: List<ItemStack>) : InventoryHolder {
+class ItemList(var items: MutableList<ItemStack>) : InventoryHolder {
 
     private val size = ceil(items.size / 9f) * 9
-
     private var inventory: Inventory = Bukkit.createInventory(
         this,
         size.toInt(),
-        Component.text("Settings")
+        Component.text("Items to Find")
     )
+
+    var selectedItems = MutableList(items.size) { false }
 
     init {
         items.forEachIndexed { index, item ->
             val selectedItem = item.clone()
-            selectedItem.editMeta {
-                it.displayName()?.append(Component.text("Found"))?.color(NamedTextColor.GREEN)
+            selectedItem.editMeta { meta ->
+                val currentName = meta.displayName() ?: Component.text(item.type.name)
+                meta.displayName(Component.text("Found: ").append(currentName).color(NamedTextColor.GREEN))
+                meta.setEnchantmentGlintOverride(true)
             }
             SelectableItem(
                 selectedItem = selectedItem,
                 deselectedItem = item,
-                isSelected = false,
+                isSelected = selectedItems[index],
                 inventory = this.inventory,
-                pos = index,
-            ){ selected, player ->
+                pos = index
+            ) { selected, player ->
+                selectedItems[index] = selected
+                inventory.setItem(index, if (selected) selectedItem else item)
+                println("Item at slot $index selected: $selected")
+                player.inventory.removeItem(item)
             }
+            inventory.setItem(index, item)
         }
     }
 
