@@ -3,27 +3,29 @@ package org.nico.itemHunt.inventories
 import org.bukkit.Bukkit
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
+import org.bukkit.inventory.ItemStack
+import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.items.HuntItem
+import org.nico.itemHunt.inventories.buttons.SelectableItem
+import org.nico.itemHunt.inventories.buttons.ToggleInventoryButton
 
 class SelectItemTagsMenu : InventoryHolder {
 
     private var inventory: Inventory = Bukkit.createInventory(this, 9 * 6)
 
     init {
-
-        var items = HuntItem.generateRandomItemList(9 * 6)
-
-//        val previousPage = ItemStack.of(Material.ARROW)
-//        val nextPage = ItemStack.of(Material.DIAMOND_SWORD)
-//
-//        var previousPageMeta = previousPage.itemMeta
-//        previousPageMeta.displayName(Component.text("Previous Page"))
-//
-//        inventory.setItem(3, nextPage)
-//        inventory.setItem(5, previousPage)
-
-        items.forEachIndexed { index, itemStack ->
-            inventory.setItem(index, itemStack)
+        HuntItem.itemPools.forEachIndexed { index, itemPool ->
+            val item = itemPool.displayItem
+            inventory.setItem(index, ItemStack.of(item))
+            ToggleInventoryButton(
+                material = item,
+                name = itemPool.name,
+                state = GameData.selectedItemPools[index],
+                inventory = inventory,
+                pos = index,
+            ) {
+                GameData.selectedItemPools[index] = it
+            }
         }
     }
 

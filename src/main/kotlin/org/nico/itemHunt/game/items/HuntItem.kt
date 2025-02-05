@@ -7,13 +7,17 @@ import kotlin.random.Random
 
 object HuntItem {
 
-    private var itemPools = CsvReader.generateItemPools().toList()
-    private val materials = Material.entries.filter { it.isItem && !it.isLegacy }
+    var itemPools = CsvReader.generateItemPools().toList()
+
+    //This will only be used for a Fallback
+    //generating this takes a lot of time
+    //that's why it's lazy
+    private val materials by lazy { Material.entries.filter { it.isItem && !it.isLegacy } }
 
     fun getRandomItem(): ItemStack {
         return if (itemPools.isNotEmpty()) {
 
-
+            val pools
             val material = itemPools.random().getRandomItem()
             ItemStack.of(material)
         } else {

@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.events.events.GameStarted
+import org.nico.itemHunt.inventories.SelectItemTagsMenu
 import org.nico.itemHunt.inventories.Settings
 import org.nico.itemHunt.inventories.TeamSelector
 
@@ -26,6 +27,7 @@ class LobbyManager : Listener {
     private val settingsItem = ItemStack(Material.COMPASS)
     private val teamItem = ItemStack(Material.RED_BED)
     private val itemSelectionItem = ItemStack(Material.CHEST)
+    private val itemSelection = SelectItemTagsMenu()
 
     init {
         settingsItem.editMeta {
@@ -62,7 +64,7 @@ class LobbyManager : Listener {
             var teamSelector = TeamSelector(player)
             player.openInventory(teamSelector.inventory)
         } else if (item.type == itemSelectionItem.type) {
-            player.sendMessage("Not implemented yet")
+            player.openInventory(itemSelection.inventory)
         }
 
         setHotBar(player)

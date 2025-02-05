@@ -13,6 +13,7 @@ class GameData {
         var backpacks = false
         var chainMode = false
         var currentGamePhase = GamePhase.LOBBY
+        var selectedItemPools = MutableList(5){false}
     }
 }
 
