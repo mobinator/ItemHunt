@@ -27,7 +27,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
 
     private val logger = plugin.logger
     private var players = emptyList<Player>()
-    lateinit var gameTimer: GameTimer
+    private lateinit var gameTimer: GameTimer
 
 
     @EventHandler
@@ -42,11 +42,16 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             player.gameMode = GameMode.SURVIVAL
         }
 
+        val chainedItemList = if (GameData.chainMode) HuntItem.generateRandomItemList(GameData.itemsToFind) else null
+
         ItemHuntTeam.teams.forEach { team ->
             if (team.players.isNotEmpty()) {
                 team.resetScore()
                 if (GameData.listMode) {
-                    team.itemList = ItemList(HuntItem.generateRandomItemList(GameData.itemsToFind).toMutableList())
+                    team.itemList = ItemList(HuntItem.generateRandomItemList(GameData.itemsToFind))
+                } else if (chainedItemList != null) {
+                    team.itemList = ItemList(chainedItemList)
+
                 } else {
                     team.itemList = null
                 }

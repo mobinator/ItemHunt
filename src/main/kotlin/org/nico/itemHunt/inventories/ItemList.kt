@@ -7,9 +7,10 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.inventories.buttons.SelectableItem
+import org.nico.itemHunt.teams.ItemHuntTeam
 import kotlin.math.ceil
 
-class ItemList(items: MutableList<ItemStack>) : InventoryHolder {
+class ItemList(items: List<ItemStack>) : InventoryHolder {
 
     private val size = ceil(items.size / 9f) * 9
     private var inventory: Inventory = Bukkit.createInventory(
@@ -18,7 +19,7 @@ class ItemList(items: MutableList<ItemStack>) : InventoryHolder {
         Component.text("Items to Find")
     )
 
-    var selectedItems = MutableList(items.size) { false }
+    private var selectedItems = MutableList(items.size) { false }
 
     init {
         items.forEachIndexed { index, item ->
@@ -39,6 +40,7 @@ class ItemList(items: MutableList<ItemStack>) : InventoryHolder {
                 inventory.setItem(index, if (selected) selectedItem else item)
                 println("Item at slot $index selected: $selected")
                 player.inventory.removeItem(item)
+                ItemHuntTeam.getTeam(player)?.addScore(1)
             }
             inventory.setItem(index, item)
         }
