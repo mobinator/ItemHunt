@@ -58,7 +58,8 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             if (team.isMember(event.player)) {
                 team.addScore(1)
                 team.itemFound(event.player)
-                removeItem(event.player, event.item, 1)
+                if (GameData.deleteItemWhenFound)
+                    removeItem(event.player, event.item, 1)
             }
         }
     }

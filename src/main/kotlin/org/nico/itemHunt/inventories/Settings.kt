@@ -13,10 +13,9 @@ class Settings : InventoryHolder {
 
     private var inventory: Inventory = Bukkit.createInventory(
         this,
-        9 * 2,
+        9 * 4,
         Component.text("Settings")
     )
-    lateinit var currentPage: String
 
     init {
 
@@ -31,16 +30,22 @@ class Settings : InventoryHolder {
     }
 
     private fun generalSettings() {
+
+
+        clearInventory()
+
+        line1()
+        line2()
+
+    }
+
+    private fun line1(){
         //Settings:
         //  - Game duration
         // - Jokers
         // - number of items to find
         // - Backpacks
         // - Chain Mode
-
-        clearInventory()
-
-
         IncrementInventoryButton(
             material = Material.CLOCK,
             name = "Game Duration",
@@ -99,6 +104,59 @@ class Settings : InventoryHolder {
         ) {
             GameData.chainMode = it
         }
+    }
+
+    private fun line2() {
+        // Sleep player percentage
+        // Keep inventory
+        // Delete Item when found
+        // List mode
+
+        IncrementInventoryButton(
+            material = Material.RED_BED,
+            name = "Sleep Player Percentage",
+            state = GameData.sleepPlayerPercentage,
+            defaultState = 50,
+            description = "The Percentage of Players that need to sleep to skip the night \n L-Click to increase \n R-Click to decrease",
+            stateLabel = "Sleep Percentage",
+            inventory = inventory,
+            pos = 19
+        ) {
+            GameData.sleepPlayerPercentage = it
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule playersSleepingPercentage $it")
+        }
+
+        ToggleInventoryButton(
+            material = Material.CHEST,
+            name = "Keep Inventory",
+            state = GameData.keepInventory,
+            inventory = inventory,
+            pos = 21
+        ) {
+            GameData.keepInventory = it
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule keepInventory $it")
+        }
+
+        ToggleInventoryButton(
+            material = Material.BARRIER,
+            name = "Delete Item when found",
+            state = GameData.deleteItemWhenFound,
+            inventory = inventory,
+            pos = 23
+        ) {
+            GameData.deleteItemWhenFound = it
+        }
+
+        ToggleInventoryButton(
+            material = Material.WRITABLE_BOOK,
+            name = "List Mode",
+            state = GameData.listMode,
+            inventory = inventory,
+            pos = 25
+        ) {
+            GameData.listMode = it
+        }
+
     }
 
     override fun getInventory(): Inventory = inventory
