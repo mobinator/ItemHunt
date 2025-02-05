@@ -11,8 +11,8 @@ import org.nico.itemHunt.game.items.HuntItem
 import org.nico.itemHunt.tasks.ItemTestScheduler
 
 class ItemHuntTeam(
-    private val teamName: String,
-    private val teamColor: NamedTextColor
+    val teamName: String,
+    val teamColor: NamedTextColor
 ): Listener {
 
     var players: MutableList<Player> = mutableListOf()
@@ -125,5 +125,17 @@ class ItemHuntTeam(
             }
             return playersWithoutTeams
         }
+
+        val teamSelectionItems = listOf(
+            ItemStack.of(Material.WHITE_WOOL),
+            ItemStack.of(Material.BLUE_WOOL),
+            ItemStack.of(Material.RED_WOOL),
+            ItemStack.of(Material.GREEN_WOOL),
+            ItemStack.of(Material.PURPLE_WOOL),
+            ItemStack.of(Material.CYAN_WOOL),
+            ItemStack.of(Material.LIME_WOOL),
+            ItemStack.of(Material.YELLOW_WOOL),
+            ItemStack.of(Material.ORANGE_WOOL),
+        )
     }
 }

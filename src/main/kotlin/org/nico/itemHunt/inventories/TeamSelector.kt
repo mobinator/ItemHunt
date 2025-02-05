@@ -7,10 +7,10 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
-import org.nico.itemHunt.inventories.buttons.SelectableItem
+import org.nico.itemHunt.inventories.buttons.TeamSelectionItem
 import org.nico.itemHunt.teams.ItemHuntTeam
 
-class TeamSelector(val player: Player): InventoryHolder {
+class TeamSelector(val player: Player) : InventoryHolder {
 
     private var inventory: Inventory = Bukkit.createInventory(
         this,
@@ -18,52 +18,51 @@ class TeamSelector(val player: Player): InventoryHolder {
         Component.text("Select your Team")
     )
 
+    // Speichert alle SelectableItem-Instanzen, um sie bei Änderungen zu aktualisieren
+    private val selectableItems = mutableListOf<TeamSelectionItem>()
+
     init {
         clearInventory()
         teamSelectorButtons()
     }
 
-    private fun teamSelectorButtons(){
-        listOf(
-            ItemStack.of(Material.WHITE_WOOL),
-            ItemStack.of(Material.BLUE_WOOL),
-            ItemStack.of(Material.RED_WOOL),
-            ItemStack.of(Material.GREEN_WOOL),
-            ItemStack.of(Material.PURPLE_WOOL),
-            ItemStack.of(Material.CYAN_WOOL),
-            ItemStack.of(Material.LIME_WOOL),
-            ItemStack.of(Material.YELLOW_WOOL),
-            ItemStack.of(Material.ORANGE_WOOL),
-        )
-            .forEachIndexed() { index, item ->
-                val selectedItem = item.clone()
-                selectedItem.editMeta {
-                    it.setEnchantmentGlintOverride(true)
+    private fun teamSelectorButtons() {
+        ItemHuntTeam.teamSelectionItems.forEachIndexed { index, item ->
+            val selectedItem = item.clone()
+            selectedItem.editMeta {
+                it.setEnchantmentGlintOverride(true)
+            }
+            val team = ItemHuntTeam.teams[index]
+            val selectableItem = TeamSelectionItem(
+                team = team,
+                selectedItem = selectedItem,
+                deselectedItem = item,
+                isSelected = { team.isMember(player) },
+                inventory = inventory,
+                pos = index,
+                onSelect = { selected ->
+                    if (selected) {
+                        team.addPlayer(player)
+                    } else {
+                        team.removePlayer(player)
+                    }
+                    updateAllSelectableItems()
                 }
-                val team = ItemHuntTeam.teams[index]
-                SelectableItem(
-                    selectedItem = selectedItem,
-                    deselectedItem = item,
-                    isSelected = team.isMember(player),
-                    inventory = inventory,
-                    pos = index,
-                    onSelect = {
-                        if (it){
-                            team.addPlayer(player)
-                        } else {
-                            team.removePlayer(player)
-                        }
-                    },
-                )
+            )
+            selectableItems.add(selectableItem)
         }
+        updateAllSelectableItems()
     }
 
-    private fun clearInventory(){
-        for (i in 0 until inventory.size){
+    private fun updateAllSelectableItems() {
+        selectableItems.forEach { it.updateItem() }
+    }
+
+    private fun clearInventory() {
+        for (i in 0 until inventory.size) {
             inventory.setItem(i, null)
         }
     }
 
     override fun getInventory(): Inventory = inventory
-
 }
