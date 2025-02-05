@@ -6,8 +6,7 @@ import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.items.HuntItem
-import org.nico.itemHunt.inventories.buttons.SelectableItem
-import org.nico.itemHunt.inventories.buttons.ToggleInventoryButton
+import org.nico.itemHunt.inventories.buttons.IncrementInventoryButton
 
 class SelectItemTagsMenu : InventoryHolder {
 
@@ -17,10 +16,13 @@ class SelectItemTagsMenu : InventoryHolder {
         HuntItem.itemPools.forEachIndexed { index, itemPool ->
             val item = itemPool.displayItem
             inventory.setItem(index, ItemStack.of(item))
-            ToggleInventoryButton(
+            IncrementInventoryButton(
                 material = item,
                 name = itemPool.name,
                 state = GameData.selectedItemPools[index],
+                defaultState = GameData.defaultItemPools[index],
+                description = "Set the weight of this item pool \n 0 = Disabled",
+                stateLabel = "Weight",
                 inventory = inventory,
                 pos = index,
             ) {

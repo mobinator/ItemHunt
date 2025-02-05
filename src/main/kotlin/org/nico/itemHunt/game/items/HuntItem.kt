@@ -2,6 +2,7 @@ package org.nico.itemHunt.game.items
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.utils.CsvReader
 import kotlin.random.Random
 
@@ -17,9 +18,9 @@ object HuntItem {
     fun getRandomItem(): ItemStack {
         return if (itemPools.isNotEmpty()) {
 
-            val pools
-            val material = itemPools.random().getRandomItem()
-            ItemStack.of(material)
+            val pools = itemPools.filterIndexed { index, _ -> GameData.selectedItemPools[index] > 0 }
+
+            ItemStack.of(weightedRandomItem(pools, GameData.selectedItemPools))
         } else {
 
             val randomIndex = Random.nextInt(materials.size)
@@ -29,5 +30,17 @@ object HuntItem {
 
     fun generateRandomItemList(length: Int): List<ItemStack> {
         return List(length) { getRandomItem() }
+    }
+
+    private fun weightedRandomItem(list: List<ItemPool>, weights: List<Int>): Material {
+        val totalweight = weights.sum()
+        var rand = Random.nextInt(totalweight)
+        weights.forEachIndexed() { index, it ->
+            rand -= it
+            if (rand <= 0) {
+                return list[index].getRandomItem()
+            }
+        }
+        return list.random().getRandomItem()
     }
 }
