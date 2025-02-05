@@ -24,6 +24,7 @@ class ItemHuntTeam(
     private var scoreboard: Scoreboard = Bukkit.getScoreboardManager().mainScoreboard
     private var scoreboardTeam: Team? = null
     private var scoreObjective: Objective? = null
+    val backpack = Bukkit.createInventory(null, 9 * 6, Component.text("Backpack"))
 
 
     init {
