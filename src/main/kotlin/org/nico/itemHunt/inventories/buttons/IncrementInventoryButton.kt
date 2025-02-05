@@ -71,6 +71,9 @@ class IncrementInventoryButton(
                     else -> {
                     }
                 }
+                if (state < 0) {
+                    state = 0
+                }
                 onClick(state)
             }
         )
