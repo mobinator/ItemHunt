@@ -1,6 +1,7 @@
 package org.nico.itemHunt.inventories.buttons
 
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.ClickType
@@ -13,7 +14,7 @@ class ClickableItem(
     val displayItem: () -> ItemStack,
     private val inventory: Inventory,
     private val pos: Int,
-    val onClick: (clickType: ClickType) -> Unit
+    val onClick: (clickType: ClickType, player: Player) -> Unit
 ) : Listener {
 
     init {
@@ -28,7 +29,7 @@ class ClickableItem(
 
             event.isCancelled = true
 
-            onClick(event.click)
+            onClick(event.click, event.whoClicked as Player)
 
             inventory.setItem(pos, displayItem.invoke())
         }

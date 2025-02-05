@@ -19,7 +19,7 @@ class TeamSelectionItem(
             displayItem = { getDisplayItem() },
             inventory = inventory,
             pos = pos,
-            onClick = {
+            onClick = { _, _ ->
                 onSelect(!isSelected.invoke())
                 updateItem()
             }

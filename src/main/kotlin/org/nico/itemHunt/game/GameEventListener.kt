@@ -17,6 +17,8 @@ import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.events.events.PlayerObtainedItem
 import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.data.GamePhase
+import org.nico.itemHunt.game.items.HuntItem
+import org.nico.itemHunt.inventories.ItemList
 import org.nico.itemHunt.teams.ItemHuntTeam
 import java.time.Duration
 import java.util.logging.Level
@@ -43,6 +45,11 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         ItemHuntTeam.teams.forEach { team ->
             if (team.players.isNotEmpty()) {
                 team.resetScore()
+                if (GameData.listMode) {
+                    team.itemList = ItemList(HuntItem.generateRandomItemList(GameData.itemsToFind))
+                } else {
+                    team.itemList = null
+                }
                 team.nextItem()
             }
         }

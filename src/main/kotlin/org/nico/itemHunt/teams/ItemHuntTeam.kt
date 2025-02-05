@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.scoreboard.*
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.game.items.HuntItem
+import org.nico.itemHunt.inventories.ItemList
 import org.nico.itemHunt.tasks.ItemTestScheduler
 
 class ItemHuntTeam(
@@ -25,6 +26,7 @@ class ItemHuntTeam(
     private var scoreboardTeam: Team? = null
     private var scoreObjective: Objective? = null
     val backpack = Bukkit.createInventory(null, 9 * 6, Component.text("Backpack"))
+    var itemList: ItemList? = null
 
 
     init {
