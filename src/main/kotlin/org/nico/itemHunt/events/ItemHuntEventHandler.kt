@@ -21,7 +21,7 @@ object ItemHuntEventHandler {
         )
     }
 
-    fun itemFound(item: Material, player:Player) {
+    fun itemFound(item: Material, player: Player) {
         callEvent(
             PlayerObtainedItem(item, player)
         )

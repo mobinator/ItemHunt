@@ -28,13 +28,13 @@ class LobbyManager : Listener {
     private val itemSelectionItem = ItemStack(Material.CHEST)
 
     init {
-        settingsItem.editMeta{
+        settingsItem.editMeta {
             it.displayName(Component.text("Settings"))
         }
-        teamItem.editMeta{
+        teamItem.editMeta {
             it.displayName(Component.text("Team Selector"))
         }
-        itemSelectionItem.editMeta{
+        itemSelectionItem.editMeta {
             it.displayName(Component.text("Item Selection"))
         }
     }
@@ -61,7 +61,7 @@ class LobbyManager : Listener {
 
             var teamSelector = TeamSelector(player)
             player.openInventory(teamSelector.inventory)
-        }else if (item.type == itemSelectionItem.type) {
+        } else if (item.type == itemSelectionItem.type) {
             player.sendMessage("Not implemented yet")
         }
 
@@ -113,7 +113,7 @@ class LobbyManager : Listener {
 
     fun setHotBar(player: Player) {
         player.inventory.clear()
-        if (player.isOp){
+        if (player.isOp) {
             player.inventory.setItem(2, settingsItem)
             player.inventory.setItem(4, itemSelectionItem)
             player.inventory.setItem(6, teamItem)

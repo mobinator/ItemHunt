@@ -51,18 +51,23 @@ class IncrementInventoryButton(
                     ClickType.LEFT -> {
                         state++
                     }
+
                     ClickType.RIGHT -> {
                         state--
                     }
+
                     ClickType.SHIFT_LEFT -> {
                         state += 10
                     }
+
                     ClickType.SHIFT_RIGHT -> {
                         state -= 10
                     }
+
                     ClickType.MIDDLE -> {
                         state = defaultState
                     }
+
                     else -> {
                     }
                 }

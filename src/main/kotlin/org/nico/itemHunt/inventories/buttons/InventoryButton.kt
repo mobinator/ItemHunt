@@ -1,13 +1,8 @@
 package org.nico.itemHunt.inventories.buttons
 
-import org.bukkit.Bukkit
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
 import org.bukkit.event.inventory.ClickType
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import org.nico.itemHunt.ItemHunt
 
 
 class InventoryButton(
@@ -37,7 +32,7 @@ class InventoryButton(
             pos = pos + 9,
             onClick = {
                 onClick(it)
-                inventory.setItem(pos , displayItem.invoke())
+                inventory.setItem(pos, displayItem.invoke())
             }
         )
         inventory.setItem(pos + 9, state.invoke())

@@ -25,7 +25,13 @@ class StartGame : BasicCommand {
             ItemHuntEventHandler.startGame()
         } else {
             commandSourceStack.sender.sendMessage(Component.text("Not enough players to start the game"))
-            commandSourceStack.sender.sendMessage(Component.text("Players without teams: ${playersWithoutTeams.map { it.displayName() }.joinToString(", ")}"))
+            commandSourceStack.sender.sendMessage(
+                Component.text(
+                    "Players without teams: ${
+                        playersWithoutTeams.map { it.displayName() }.joinToString(", ")
+                    }"
+                )
+            )
         }
 
     }

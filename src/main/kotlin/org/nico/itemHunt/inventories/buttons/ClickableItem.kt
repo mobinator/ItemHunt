@@ -14,7 +14,7 @@ class ClickableItem(
     private val inventory: Inventory,
     private val pos: Int,
     val onClick: (clickType: ClickType) -> Unit
-): Listener {
+) : Listener {
 
     init {
         Bukkit.getPluginManager().registerEvents(this, ItemHunt.instance)

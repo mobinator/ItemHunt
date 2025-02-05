@@ -24,13 +24,13 @@ class Settings : InventoryHolder {
 
     }
 
-    private fun clearInventory(){
-        for (i in 0 until inventory.size){
+    private fun clearInventory() {
+        for (i in 0 until inventory.size) {
             inventory.setItem(i, null)
         }
     }
 
-    private fun generalSettings(){
+    private fun generalSettings() {
         //Settings:
         //  - Game duration
         // - Jokers

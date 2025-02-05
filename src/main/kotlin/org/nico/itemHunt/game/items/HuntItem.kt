@@ -9,8 +9,7 @@ object HuntItem {
 
     private var itemPools: MutableList<ItemPool> = mutableListOf()
     private var poolSize = 0
-    val materials = Material.entries.filter { it.isItem && !it.isLegacy}
-
+    val materials = Material.entries.filter { it.isItem && !it.isLegacy }
 
 
     fun getRandomItem(): ItemStack {
