@@ -2,49 +2,42 @@ package org.nico.itemHunt.game.items
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import org.nico.itemHunt.utils.CsvReader
 import kotlin.random.Random
 
 object HuntItem {
 
-
-    private var itemPools: MutableList<ItemPool> = mutableListOf()
+    private var itemPools = CsvReader.generateItemPools().toList()
     private var poolSize = 0
-    val materials = Material.entries.filter { it.isItem && !it.isLegacy }
-
+    private val materials = Material.entries.filter { it.isItem && !it.isLegacy }
 
     fun getRandomItem(): ItemStack {
+        return if (poolSize > 0) {
 
-//        if (poolSize == 0) {
-//            throw IllegalStateException("No item pools added")
-//        }
+            val randomIndex = Random.nextInt(poolSize)
+            val material = getItemFromPools(randomIndex)
+            ItemStack.of(material)
+        } else {
 
-        val nextItem = Random.nextInt(materials.size)
-        return ItemStack.of(materials[nextItem])
+            val randomIndex = Random.nextInt(materials.size)
+            ItemStack.of(materials[randomIndex])
+        }
     }
 
     fun generateRandomItemList(length: Int): List<ItemStack> {
         return List(length) { getRandomItem() }
     }
 
-    fun addPool(itemPoolSource: String): HuntItem {
-        val pool = ItemPool(itemPoolSource)
-        itemPools.add(pool)
-        poolSize += pool.items.size
-        return this
-    }
-
     private fun getItemFromPools(index: Int): Material {
-
-        var index = index
-
-        itemPools.forEach {
-            if (index < it.items.size) {
-                return it.items[index]
+        var indexRemaining = index
+        itemPools.forEach { pool ->
+            if (indexRemaining < pool.items.size) {
+                return pool.items[indexRemaining]
             } else {
-                index -= it.items.size
+                indexRemaining -= pool.items.size
             }
         }
+
         return Material.STICK
     }
 }
-
