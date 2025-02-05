@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.inventories.buttons.SelectableItem
 import kotlin.math.ceil
 
-class ItemList(var items: MutableList<ItemStack>) : InventoryHolder {
+class ItemList(items: MutableList<ItemStack>) : InventoryHolder {
 
     private val size = ceil(items.size / 9f) * 9
     private var inventory: Inventory = Bukkit.createInventory(

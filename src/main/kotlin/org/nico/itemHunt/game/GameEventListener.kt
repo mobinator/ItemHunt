@@ -139,7 +139,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
     }
 
     private fun showWinnerTitle(winners: List<ItemHuntTeam>) {
-        val title: String = if (winners.size == 1) {
+        val titleText: String = if (winners.size == 1) {
             "${winners.first().teamName} Wins!"
         } else if (winners.size > 1) {
             "It's a Tie!"
@@ -156,7 +156,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         object : BukkitRunnable() {
             override fun run() {
                 val title = Title.title(
-                    Component.text(title, if(winners.size == 1) winners.first().teamColor else NamedTextColor.WHITE),
+                    Component.text(titleText, if(winners.size == 1) winners.first().teamColor else NamedTextColor.WHITE),
                     Component.text(subTitle),
                     Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(1000))
                 )
