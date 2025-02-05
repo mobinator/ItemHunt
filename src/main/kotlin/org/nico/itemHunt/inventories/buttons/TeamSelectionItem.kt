@@ -32,7 +32,6 @@ class TeamSelectionItem(
 
     fun updateItem() {
         val displayName = Component.text(team.teamName, team.teamColor)
-        val members = team.players.joinToString("\n")
         val lore = team.players.map {
             Component.text(it.name, team.teamColor)
         }

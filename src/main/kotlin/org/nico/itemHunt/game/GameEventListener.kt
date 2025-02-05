@@ -4,12 +4,14 @@ import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.events.GameStarted
 import org.nico.itemHunt.events.events.PlayerObtainedItem
 import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.data.GamePhase
 import org.nico.itemHunt.teams.ItemHuntTeam
+import org.nico.itemHunt.utils.removeItem
 import java.util.logging.Level
 
 class GameEventListener(private val plugin: ItemHunt) : Listener {
@@ -44,6 +46,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             if (team.isMember(event.player)) {
                 team.addScore(1)
                 team.itemFound(event.player)
+                removeItem(event.player, event.item, 1)
             }
         }
     }

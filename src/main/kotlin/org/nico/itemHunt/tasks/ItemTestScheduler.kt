@@ -1,5 +1,6 @@
 package org.nico.itemHunt.tasks
 
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitTask
@@ -19,7 +20,7 @@ class ItemTestScheduler(
 
         if (player.isOnline) {
 
-            if (item in player.inventory) {
+            if (item.type in player.inventory.map { it?.type ?: Material.AIR }) {
                 player.sendMessage("You have found the Item. Well done!")
                 ItemHuntEventHandler.itemFound(item = item.type, player = player)
                 player.inventory.remove(item)
