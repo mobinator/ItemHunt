@@ -39,7 +39,7 @@ class Settings : InventoryHolder {
 
     }
 
-    private fun line1(){
+    private fun line1() {
         //Settings:
         //  - Game duration
         // - Jokers

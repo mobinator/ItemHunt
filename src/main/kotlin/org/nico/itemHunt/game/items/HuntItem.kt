@@ -12,10 +12,10 @@ object HuntItem {
     private val materials = Material.entries.filter { it.isItem && !it.isLegacy }
 
     fun getRandomItem(): ItemStack {
-        return if (poolSize > 0) {
+        return if (itemPools.isNotEmpty()) {
 
-            val randomIndex = Random.nextInt(poolSize)
-            val material = getItemFromPools(randomIndex)
+
+            val material = itemPools.random().getRandomItem()
             ItemStack.of(material)
         } else {
 

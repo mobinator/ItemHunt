@@ -21,7 +21,7 @@ class Backpack : BasicCommand {
                 return
             }
 
-            if (!GameData.backpacks){
+            if (!GameData.backpacks) {
                 player.sendMessage("Backpacks are disabled")
                 return
             }
