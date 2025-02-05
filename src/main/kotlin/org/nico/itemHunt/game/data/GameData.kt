@@ -15,4 +15,5 @@ class GameData {
 enum class GamePhase {
     LOBBY,
     PLAYING,
+    STOPPED
 }

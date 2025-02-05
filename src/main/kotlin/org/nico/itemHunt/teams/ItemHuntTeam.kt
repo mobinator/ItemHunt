@@ -15,11 +15,11 @@ import org.nico.itemHunt.tasks.ItemTestScheduler
 class ItemHuntTeam(
     val teamName: String,
     val teamColor: NamedTextColor
-): Listener {
+) : Listener {
 
     var players: MutableList<Player> = mutableListOf()
     private var schedules: MutableList<ItemTestScheduler> = mutableListOf()
-    private var score: Int = 0
+    var score: Int = 0
     private val plugin = ItemHunt.instance
     private var scoreboard: Scoreboard = Bukkit.getScoreboardManager().mainScoreboard
     private var scoreboardTeam: Team? = null
@@ -97,10 +97,10 @@ class ItemHuntTeam(
 
     private fun addShedule(player: Player) {
         val schedule = ItemTestScheduler(
-                player = player,
-                logger = plugin.logger,
-                item = ItemStack.of(Material.BEDROCK)
-            )
+            player = player,
+            logger = plugin.logger,
+            item = ItemStack.of(Material.BEDROCK)
+        )
         schedules.add(schedule)
         plugin.sheduler.runTaskTimer(plugin, schedule, 0, 20)
     }
