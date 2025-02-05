@@ -20,9 +20,9 @@ object HuntItem {
 
         var item = getRandomItem()
 
-        if(GameData.chainMode){
+        if (GameData.chainMode) {
 
-            if(GameData.itemQueue.size >= team.score +1){
+            if (GameData.itemQueue.size >= team.score + 1) {
                 item = GameData.itemQueue[team.score]
             } else {
                 item = getRandomItem()

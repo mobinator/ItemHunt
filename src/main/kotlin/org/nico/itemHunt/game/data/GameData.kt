@@ -21,20 +21,20 @@ class GameData {
     }
 
     fun printAllFields() {
-            println("listMode: $listMode")
-            println("deleteItemWhenFound: $deleteItemWhenFound")
-            println("keepInventory: $keepInventory")
-            println("sleepPlayerPercentage: $sleepPlayerPercentage")
-            println("gameDuration: $gameDuration")
-            println("jokers: $jokers")
-            println("itemsToFind: $itemsToFind")
-            println("backpacks: $backpacks")
-            println("chainMode: $chainMode")
-            println("currentGamePhase: $currentGamePhase")
-            println("defaultItemPools: $defaultItemPools")
-            println("selectedItemPools: $selectedItemPools")
-            println("itemQueue: $itemQueue")
-        }
+        println("listMode: $listMode")
+        println("deleteItemWhenFound: $deleteItemWhenFound")
+        println("keepInventory: $keepInventory")
+        println("sleepPlayerPercentage: $sleepPlayerPercentage")
+        println("gameDuration: $gameDuration")
+        println("jokers: $jokers")
+        println("itemsToFind: $itemsToFind")
+        println("backpacks: $backpacks")
+        println("chainMode: $chainMode")
+        println("currentGamePhase: $currentGamePhase")
+        println("defaultItemPools: $defaultItemPools")
+        println("selectedItemPools: $selectedItemPools")
+        println("itemQueue: $itemQueue")
+    }
 }
 
 enum class GamePhase {
