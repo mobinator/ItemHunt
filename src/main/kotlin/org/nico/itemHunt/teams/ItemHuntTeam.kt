@@ -163,7 +163,8 @@ class ItemHuntTeam(
             ItemHuntTeam("Blue Team", NamedTextColor.BLUE),
             ItemHuntTeam("Red Team", NamedTextColor.RED),
             ItemHuntTeam("Green Team", NamedTextColor.GREEN),
-            ItemHuntTeam("Purple Team", NamedTextColor.DARK_PURPLE
+            ItemHuntTeam(
+                "Purple Team", NamedTextColor.DARK_PURPLE
             ),
             ItemHuntTeam("Cyan Team", NamedTextColor.AQUA),
             ItemHuntTeam("Lime Team", NamedTextColor.GREEN),

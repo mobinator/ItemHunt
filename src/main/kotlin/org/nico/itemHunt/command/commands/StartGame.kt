@@ -19,7 +19,7 @@ class StartGame : BasicCommand {
 
         println(ItemHuntTeam.getTeam(commandSourceStack.sender as Player))
 
-        if (!commandSourceStack.sender.isOp){
+        if (!commandSourceStack.sender.isOp) {
             commandSourceStack.sender.sendMessage(Component.text("You do not have permission to use this command"))
             return
         }

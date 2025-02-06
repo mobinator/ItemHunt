@@ -20,7 +20,7 @@ class InventoryButton(
             displayItem = displayItem,
             inventory = inventory,
             pos = pos,
-            onClick = {it, _ ->
+            onClick = { it, _ ->
                 onClick(it)
                 inventory.setItem(pos + 9, state.invoke())
             }
@@ -30,7 +30,7 @@ class InventoryButton(
             displayItem = state,
             inventory = inventory,
             pos = pos + 9,
-            onClick = {it, _ ->
+            onClick = { it, _ ->
                 onClick(it)
                 inventory.setItem(pos, displayItem.invoke())
             }

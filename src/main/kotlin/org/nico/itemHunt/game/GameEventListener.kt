@@ -50,7 +50,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
                     } else {
                         team.itemList = ItemList(HuntItem.generateRandomItemList(GameData.itemsToFind))
                     }
-                }  else {
+                } else {
                     team.itemList = null
                     team.nextItem()
                 }
@@ -136,10 +136,8 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
                     if (team.score != 0) {
                         if (winners.isEmpty())
                             winners.add(team)
-
                         else if (team.score > winners.first().score)
                             winners = mutableListOf(team)
-
                         else if (team.score == winners.first().score)
                             winners.add(team)
                     }
@@ -158,20 +156,23 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             "${winners.first().teamName} Wins!"
         } else if (winners.size > 1) {
             "It's a Tie!"
-        }  else {
+        } else {
             "No Winners"
         }
         val subTitle = if (winners.size == 1) {
             "Congratulations!"
         } else if (winners.size > 1) {
             winners.joinToString(", ") { it.teamName }
-        }  else {
+        } else {
             "Fucking loosers"
         }
         object : BukkitRunnable() {
             override fun run() {
                 val title = Title.title(
-                    Component.text(titleText, if(winners.size == 1) winners.first().teamColor else NamedTextColor.WHITE),
+                    Component.text(
+                        titleText,
+                        if (winners.size == 1) winners.first().teamColor else NamedTextColor.WHITE
+                    ),
                     Component.text(subTitle),
                     Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(1000))
                 )

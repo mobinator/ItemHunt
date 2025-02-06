@@ -14,9 +14,9 @@ class SettingsCommand : BasicCommand {
         if (commandSourceStack.executor is Player) {
             val player = commandSourceStack.executor as Player
 
-            if (!commandSourceStack.sender.isOp){
-            commandSourceStack.sender.sendMessage(Component.text("You do not have permission to use this command"))
-            return
+            if (!commandSourceStack.sender.isOp) {
+                commandSourceStack.sender.sendMessage(Component.text("You do not have permission to use this command"))
+                return
             }
 
 
