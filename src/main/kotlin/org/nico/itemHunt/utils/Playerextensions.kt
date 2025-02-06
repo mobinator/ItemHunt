@@ -16,7 +16,7 @@ fun removeItem(player: Player, targetMaterial: Material, amount: Int = 1) {
                 remaining -= item.amount
                 inventory.setItem(slot, null)
             } else {
-                item.amount = item.amount - remaining
+                item.amount -= remaining
                 remaining = 0
             }
         }

@@ -7,6 +7,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.ItemHuntEventHandler
+import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.teams.ItemHuntTeam
 
 class StartGame : BasicCommand {
@@ -24,6 +25,10 @@ class StartGame : BasicCommand {
             return
         }
 
+        if (GameData.listMode && GameData.itemsToFind > 54){
+            commandSourceStack.sender.sendMessage(Component.text("Too many items to find for list mode please dont go higher than 54 Sorry"))
+            return
+        }
 
         if (playersWithoutTeams.isEmpty()) {
             sendMessage(name = name)
