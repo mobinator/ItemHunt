@@ -28,7 +28,7 @@ class StartGame : BasicCommand {
             commandSourceStack.sender.sendMessage(
                 Component.text(
                     "Players without teams: ${
-                        playersWithoutTeams.map { it.displayName() }.joinToString(", ")
+                        playersWithoutTeams.map { it.name }.joinToString(", ")
                     }"
                 )
             )

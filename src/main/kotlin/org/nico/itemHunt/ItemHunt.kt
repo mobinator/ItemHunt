@@ -49,5 +49,10 @@ class ItemHunt : JavaPlugin(), Listener {
 
     }
 
-    override fun onDisable() {}
+    override fun onDisable() {
+        ItemHuntEventHandler.resetGame()
+        ItemHuntTeam.teams.forEach {
+            it.scoreboardTeam?.unregister()
+        }
+    }
 }

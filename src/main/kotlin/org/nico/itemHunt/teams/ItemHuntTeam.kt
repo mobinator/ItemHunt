@@ -23,7 +23,7 @@ class ItemHuntTeam(
     var score: Int = 0
     private val plugin = ItemHunt.instance
     private var scoreboard: Scoreboard = Bukkit.getScoreboardManager().mainScoreboard
-    private var scoreboardTeam: Team? = null
+    var scoreboardTeam: Team? = null
     private var scoreObjective: Objective? = null
     val backpack = Bukkit.createInventory(null, 9 * 6, Component.text("Backpack"))
     var itemList: ItemList? = null
@@ -163,7 +163,8 @@ class ItemHuntTeam(
             ItemHuntTeam("Blue Team", NamedTextColor.BLUE),
             ItemHuntTeam("Red Team", NamedTextColor.RED),
             ItemHuntTeam("Green Team", NamedTextColor.GREEN),
-            ItemHuntTeam("Purple Team", NamedTextColor.LIGHT_PURPLE),
+            ItemHuntTeam("Purple Team", NamedTextColor.DARK_PURPLE
+            ),
             ItemHuntTeam("Cyan Team", NamedTextColor.AQUA),
             ItemHuntTeam("Lime Team", NamedTextColor.GREEN),
             ItemHuntTeam("Yellow Team", NamedTextColor.YELLOW),
