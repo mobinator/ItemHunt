@@ -1147,9 +1147,9 @@ minecraft:red_candle,1
 minecraft:black_candle,1
 minecraft:amethyst_cluster,2
 minecraft:pointed_dripstone,1
-minecraft:ochre_froglight,1
-minecraft:verdant_froglight,1
-minecraft:pearlescent_froglight,1
+minecraft:ochre_froglight,3
+minecraft:verdant_froglight,3
+minecraft:pearlescent_froglight,3
 minecraft:frogspawn,1
 minecraft:echo_shard,4
 minecraft:brush,1

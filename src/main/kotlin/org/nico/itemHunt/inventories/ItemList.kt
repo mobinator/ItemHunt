@@ -6,8 +6,10 @@ import org.bukkit.Bukkit
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
+import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.inventories.buttons.SelectableItem
 import org.nico.itemHunt.teams.ItemHuntTeam
+import org.nico.itemHunt.utils.removeItem
 import kotlin.math.ceil
 
 class ItemList(items: List<ItemStack>) : InventoryHolder {
@@ -39,7 +41,8 @@ class ItemList(items: List<ItemStack>) : InventoryHolder {
                 selectedItems[index] = selected
                 inventory.setItem(index, if (selected) selectedItem else item)
                 println("Item at slot $index selected: $selected")
-                player.inventory.removeItem(item)
+                if (GameData.deleteItemWhenFound)
+                    removeItem(player, item.type)
                 ItemHuntTeam.getTeam(player)?.addScore(1)
             }
             inventory.setItem(index, item)

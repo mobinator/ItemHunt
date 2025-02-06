@@ -17,6 +17,7 @@ import org.nico.itemHunt.game.data.GamePhase
 import org.nico.itemHunt.game.items.HuntItem
 import org.nico.itemHunt.inventories.ItemList
 import org.nico.itemHunt.teams.ItemHuntTeam
+import org.nico.itemHunt.utils.removeItem
 import java.time.Duration
 import java.util.logging.Level
 
@@ -70,7 +71,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
                 team.addScore(1)
                 team.itemFound(event.player)
                 if (GameData.deleteItemWhenFound)
-                    event.player.inventory.removeItem(event.item)
+                    removeItem(event.player, event.item.type)
             }
         }
     }
