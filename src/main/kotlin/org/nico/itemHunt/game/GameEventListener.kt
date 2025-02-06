@@ -101,6 +101,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             team.reset()
         }
         Bukkit.getPluginManager().registerEvents(lobbyManager, plugin)
+        gameTimer.reset()
     }
 
     private fun teleportToSpawn(player: Player) {
@@ -126,8 +127,10 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
                     Bukkit.broadcast(Component.text("${team.teamName} Score: ${team.score}"))
 
                     if (team.score != 0) {
+                        if (winners.isEmpty())
+                            winners.add(team)
 
-                        if (team.score > winners.first().score)
+                        else if (team.score > winners.first().score)
                             winners = mutableListOf(team)
 
                         else if (team.score == winners.first().score)

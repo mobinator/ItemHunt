@@ -53,6 +53,13 @@ class GameTimer(private val plugin: ItemHunt) {
         ItemHuntEventHandler.stopGame()
     }
 
+    fun reset() {
+        task?.cancel()
+        timeLeft = 0
+        bossBar.removeAll()
+        updateBossBar()
+    }
+
     private fun updateBossBar() {
         val hours = timeLeft / 3600
         val minutes = timeLeft % 3600 / 60
