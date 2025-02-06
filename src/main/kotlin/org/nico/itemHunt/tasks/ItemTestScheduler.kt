@@ -8,22 +8,31 @@ import org.nico.itemHunt.events.ItemHuntEventHandler
 import java.util.function.Consumer
 import java.util.logging.Logger
 
-
 class ItemTestScheduler(
-    private val player: Player,
+    val player: Player,
     private val logger: Logger,
     var item: ItemStack,
+) : Consumer<BukkitTask?> {
 
-    ) : Consumer<BukkitTask?> {
+    private var task: BukkitTask? = null
 
-    override fun accept(it: BukkitTask?) {
+    override fun accept(bukkitTask: BukkitTask?) {
+        if (task == null) {
+            task = bukkitTask
+        }
 
         if (player.isOnline) {
-
             if (item.type in player.inventory.map { it?.type ?: Material.AIR }) {
                 player.sendMessage("You have found the Item. Well done!")
                 ItemHuntEventHandler.itemFound(item = item, player = player)
+                cancel()
             }
         }
+    }
+
+    fun cancel() {
+        logger.info("Cancelling task for player ${player.name}")
+        task?.cancel()
+        task = null
     }
 }

@@ -11,10 +11,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.scheduler.BukkitRunnable
 import org.nico.itemHunt.ItemHunt
-import org.nico.itemHunt.events.events.GameEnded
-import org.nico.itemHunt.events.events.GameReset
-import org.nico.itemHunt.events.events.GameStarted
-import org.nico.itemHunt.events.events.PlayerObtainedItem
+import org.nico.itemHunt.events.events.*
 import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.data.GamePhase
 import org.nico.itemHunt.game.items.HuntItem
@@ -102,6 +99,15 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         }
         Bukkit.getPluginManager().registerEvents(lobbyManager, plugin)
         gameTimer.reset()
+    }
+
+    @EventHandler
+    fun onPlayerRejoin(event: PlayerRejoin) {
+        val player = event.player
+        ItemHuntTeam.teams.forEach { team ->
+            if (team.isMember(player))
+                team.reAddPlayer(player)
+        }
     }
 
     private fun teleportToSpawn(player: Player) {

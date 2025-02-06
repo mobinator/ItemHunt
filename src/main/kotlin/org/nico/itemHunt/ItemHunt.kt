@@ -8,9 +8,14 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
+import org.nico.itemHunt.events.ItemHuntEventHandler
+import org.nico.itemHunt.events.events.GameReset
 import org.nico.itemHunt.game.GameEventListener
 import org.nico.itemHunt.game.LobbyManager
+import org.nico.itemHunt.game.data.GameData
+import org.nico.itemHunt.game.data.GamePhase
 import org.nico.itemHunt.inventories.InventoryEventListener
+import org.nico.itemHunt.teams.ItemHuntTeam
 import java.util.logging.Level
 
 
@@ -39,9 +44,9 @@ class ItemHunt : JavaPlugin(), Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
-        player.displayName(Component.text(player.name, NamedTextColor.WHITE))
-        player.playerListName(Component.text(player.name, NamedTextColor.WHITE))
         player.sendMessage(Component.text("Hello, ${player.name}"))
+        ItemHuntEventHandler.playerRejoin(player)
+
     }
 
     override fun onDisable() {}

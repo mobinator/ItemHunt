@@ -27,6 +27,7 @@ class ItemHuntTeam(
     private var scoreObjective: Objective? = null
     val backpack = Bukkit.createInventory(null, 9 * 6, Component.text("Backpack"))
     var itemList: ItemList? = null
+    var currentItem: ItemStack? = null
 
 
     init {
@@ -69,6 +70,21 @@ class ItemHuntTeam(
         scoreboard.getObjective("teamScore")?.getScore(player.name)?.score = 0
     }
 
+    fun reAddPlayer(player: Player) {
+        players.add(player)
+        schedules.forEach {
+            if (it.player.name == player.name) {
+                it.cancel()
+            }
+        }
+        addShedule(player)
+
+        player.displayName(Component.text(player.name, teamColor))
+        player.playerListName(Component.text(player.name, teamColor))
+
+        scoreboardTeam?.addEntry(player.name)
+    }
+
     fun addScore(points: Int) {
         score += points
         updateAllPlayerScores()
@@ -77,6 +93,7 @@ class ItemHuntTeam(
     fun resetScore() {
         score = 0
         updateAllPlayerScores()
+        currentItem = null
     }
 
     private fun updatePlayerScore(player: Player) {
@@ -88,7 +105,7 @@ class ItemHuntTeam(
     }
 
     fun isMember(player: Player): Boolean {
-        return players.contains(player)
+        return players.map { it.name }.contains(player.name)
     }
 
     fun broadcastMessage(message: String, playerToExclude: Player? = null) {
@@ -102,7 +119,7 @@ class ItemHuntTeam(
         val schedule = ItemTestScheduler(
             player = player,
             logger = plugin.logger,
-            item = ItemStack.of(Material.BEDROCK)
+            item = currentItem ?: ItemStack.of(Material.BEDROCK)
         )
         schedules.add(schedule)
         plugin.sheduler.runTaskTimer(plugin, schedule, 0, 20)
@@ -125,6 +142,7 @@ class ItemHuntTeam(
 
     fun nextItem() {
         val newItem = HuntItem.nextItem(this)
+        currentItem = newItem.clone()
 
         broadcastMessage("New item: ${newItem.type}")
 
@@ -145,7 +163,7 @@ class ItemHuntTeam(
             ItemHuntTeam("Blue Team", NamedTextColor.BLUE),
             ItemHuntTeam("Red Team", NamedTextColor.RED),
             ItemHuntTeam("Green Team", NamedTextColor.GREEN),
-            ItemHuntTeam("Purple Team", NamedTextColor.DARK_PURPLE),
+            ItemHuntTeam("Purple Team", NamedTextColor.LIGHT_PURPLE),
             ItemHuntTeam("Cyan Team", NamedTextColor.AQUA),
             ItemHuntTeam("Lime Team", NamedTextColor.GREEN),
             ItemHuntTeam("Yellow Team", NamedTextColor.YELLOW),
