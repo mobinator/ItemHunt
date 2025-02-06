@@ -10,7 +10,7 @@ class RegisterCommands : PluginBootstrap {
     override fun bootstrap(context: BootstrapContext) {
         context.lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS) { commands ->
             commands.registrar().register("start_game", StartGame())
-            commands.registrar().register("end_game", StartGame())
+            commands.registrar().register("end_game", StopGame())
             commands.registrar().register("reset_game", ResetGame())
             commands.registrar().register("game_settings", SettingsCommand())
             commands.registrar().register("skip_item", SkipItem())

@@ -3,6 +3,7 @@ package org.nico.itemHunt.command.commands
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Player
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.ItemHuntEventHandler
 import org.nico.itemHunt.teams.ItemHuntTeam
@@ -13,8 +14,10 @@ class ResetGame : BasicCommand {
 
         val name = commandSourceStack.executor?.name ?: commandSourceStack.sender.name
 
-        val playersWithoutTeams = ItemHuntTeam.playersWithoutTeams(ItemHunt.instance.server.onlinePlayers.toList())
-
+        if (!commandSourceStack.sender.isOp){
+            commandSourceStack.sender.sendMessage(Component.text("You do not have permission to use this command"))
+            return
+        }
 
         ItemHuntEventHandler.resetGame()
 
