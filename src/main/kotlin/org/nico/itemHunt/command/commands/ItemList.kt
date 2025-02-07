@@ -26,7 +26,7 @@ class ItemList : BasicCommand {
                 return
             }
 
-            if (GameData.currentGamePhase != GamePhase.PLAYING) {
+            if (GameData.currentGamePhase !in listOf(GamePhase.PLAYING, GamePhase.STOPPED)) {
                 player.sendMessage("You can only open your backpack during the game")
                 return
             }
