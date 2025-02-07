@@ -1,29 +1,43 @@
-name: Build JAR
+name: Build and Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'   # Löst den Workflow bei jedem Tag aus, der mit "v" beginnt (z.B. v1.0.0)
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v3
 
-      - name: JDK 17 einrichten
+      - name: JDK 21 einrichten
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: 21
 
-      - name: Build mit Gradle ausführen
-        run: ./gradlew clean build
+      - name: Build mit Maven
+        run: mvn clean package
 
-      - name: Erzeugte JAR als Artefakt speichern
+      - name: Artifact hochladen
         uses: actions/upload-artifact@v3
         with:
-          name: generated-jar
-          path: build/libs/*.jar
+          name: jar-artifact
+          path: target/*.jar
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Artifact herunterladen
+        uses: actions/download-artifact@v3
+        with:
+          name: jar-artifact
+
+      - name: GitHub Release erstellen und JAR anhängen
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref }}       # Nutzt den Tag, der den Workflow ausgelöst hat
+          files: '*.jar'               # Fügt alle .jar-Dateien im aktuellen Verzeichnis als Release-Asset hinzu
