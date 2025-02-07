@@ -1,8 +1,5 @@
 package org.nico.itemHunt.game
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Location
@@ -10,16 +7,15 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerAdvancementDoneEvent
-import org.bukkit.scheduler.BukkitRunnable
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.events.*
 import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.data.GamePhase
 import org.nico.itemHunt.game.items.HuntItem
+import org.nico.itemHunt.game.postgame.PostGameSummary
 import org.nico.itemHunt.inventories.ItemList
 import org.nico.itemHunt.teams.ItemHuntTeam
 import org.nico.itemHunt.utils.removeItem
-import java.time.Duration
 import java.util.logging.Level
 
 class GameEventListener(private val plugin: ItemHunt) : Listener {
@@ -86,7 +82,7 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         }
         GameData.currentGamePhase = GamePhase.STOPPED
 
-        staggeredPostGameSummary()
+        PostGameSummary(players, plugin).staggeredPostGameSummary()
     }
 
     @EventHandler
@@ -128,70 +124,4 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         player.teleport(spawnLocation)
     }
 
-    private fun staggeredPostGameSummary() {
-        object : BukkitRunnable() {
-            var winners = mutableListOf<ItemHuntTeam>()
-            val teams = ItemHuntTeam.teams.filter { it.players.isNotEmpty() }.sortedByDescending { it.score }
-            var index = -1
-
-            override fun run() {
-                if (index == -1) {
-                    index = 0
-                    return
-                }
-
-                if (index < teams.size) {
-                    val team = teams[index]
-                    logger.log(Level.INFO, "${team.teamName} Score: ${team.score}")
-                    Bukkit.broadcast(Component.text("${team.teamName} Score: ${team.score}"))
-
-                    if (team.score != 0) {
-                        if (winners.isEmpty())
-                            winners.add(team)
-                        else if (team.score > winners.first().score)
-                            winners = mutableListOf(team)
-                        else if (team.score == winners.first().score)
-                            winners.add(team)
-                    }
-
-                    index++
-                } else {
-                    showWinnerTitle(winners)
-                    cancel()
-                }
-            }
-        }.runTaskTimer(plugin, 40L, 20L)
-    }
-
-    private fun showWinnerTitle(winners: List<ItemHuntTeam>) {
-        val titleText: String = if (winners.size == 1) {
-            "${winners.first().teamName} Wins!"
-        } else if (winners.size > 1) {
-            "It's a Tie!"
-        } else {
-            "No Winners"
-        }
-        val subTitle = if (winners.size == 1) {
-            "Congratulations!"
-        } else if (winners.size > 1) {
-            winners.joinToString(", ") { it.teamName }
-        } else {
-            "Fucking loosers"
-        }
-        object : BukkitRunnable() {
-            override fun run() {
-                val title = Title.title(
-                    Component.text(
-                        titleText,
-                        if (winners.size == 1) winners.first().teamColor else NamedTextColor.WHITE
-                    ),
-                    Component.text(subTitle),
-                    Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(1000))
-                )
-                players.forEach { player ->
-                    player.showTitle(title)
-                }
-            }
-        }.runTaskLater(plugin, 40L)
-    }
 }
