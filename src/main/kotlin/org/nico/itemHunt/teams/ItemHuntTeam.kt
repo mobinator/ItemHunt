@@ -117,6 +117,13 @@ class ItemHuntTeam(
         }
     }
 
+    fun broadcastMessage(message: Component, playerToExclude: Player? = null) {
+        players.forEach { player ->
+            if (player != playerToExclude)
+                player.sendMessage(message)
+        }
+    }
+
     private fun addShedule(player: Player) {
         val schedule = ItemTestScheduler(
             player = player,

@@ -37,6 +37,8 @@ class ItemHunt : JavaPlugin(), Listener {
         logger.log(Level.INFO, "Initilizing Itemhunt Version ${description.version}")
 
         LobbyManager.worldConfig(false)
+
+        server.dispatchCommand(server.consoleSender, "gamerule announceAdvancements false")
     }
 
     @EventHandler

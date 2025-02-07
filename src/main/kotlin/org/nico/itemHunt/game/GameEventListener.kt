@@ -9,6 +9,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerAdvancementDoneEvent
 import org.bukkit.scheduler.BukkitRunnable
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.events.*
@@ -39,6 +40,8 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             player.inventory.clear()
             player.gameMode = GameMode.SURVIVAL
         }
+
+        plugin.server.dispatchCommand(plugin.server.consoleSender, "advancement revoke @a everything")
 
         val chainedItemList = if (GameData.chainMode) HuntItem.generateRandomItemList(GameData.itemsToFind) else null
 
@@ -109,6 +112,14 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         ItemHuntTeam.teams.forEach { team ->
             if (team.isMember(player))
                 team.reAddPlayer(player)
+        }
+    }
+
+    @EventHandler
+    fun onAdvancementDone(event: PlayerAdvancementDoneEvent) {
+        val message = event.message()
+        if (message != null) {
+            ItemHuntTeam.getTeam(event.player)?.broadcastMessage(message)
         }
     }
 
