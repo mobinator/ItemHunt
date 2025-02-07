@@ -8,6 +8,7 @@ import org.bukkit.entity.Player
 import org.nico.itemHunt.ItemHunt
 import org.nico.itemHunt.events.ItemHuntEventHandler
 import org.nico.itemHunt.game.data.GameData
+import org.nico.itemHunt.game.data.GamePhase
 import org.nico.itemHunt.teams.ItemHuntTeam
 
 class StartGame : BasicCommand {
@@ -22,6 +23,11 @@ class StartGame : BasicCommand {
 
         if (!commandSourceStack.sender.isOp) {
             commandSourceStack.sender.sendMessage(Component.text("You do not have permission to use this command"))
+            return
+        }
+
+        if (GameData.currentGamePhase == GamePhase.PLAYING){
+            commandSourceStack.sender.sendMessage(Component.text("Game is already in progress"))
             return
         }
 

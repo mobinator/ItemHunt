@@ -35,6 +35,8 @@ class ItemHunt : JavaPlugin(), Listener {
         sheduler = server.scheduler
 
         logger.log(Level.INFO, "Initilizing Itemhunt Version ${description.version}")
+
+        LobbyManager.worldConfig(false)
     }
 
     @EventHandler
