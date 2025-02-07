@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 import org.nico.itemHunt.game.data.GameData
+import org.nico.itemHunt.inventories.buttons.ClickableItem
 import org.nico.itemHunt.inventories.buttons.SelectableItem
 import org.nico.itemHunt.teams.ItemHuntTeam
 import org.nico.itemHunt.utils.removeItem
@@ -27,31 +28,44 @@ class ItemList(items: List<ItemStack>) : InventoryHolder {
     private var selectedItems = MutableList(items.size) { false }
 
     init {
+        println("${selectedItems.size} ${items.size}")
         inventory.forEachIndexed { index, _ ->
-            val item = if(index < items.size) items[index] else ItemStack(Material.BEDROCK)
-            val selectedItem = item.clone()
-            selectedItem.editMeta { meta ->
-                val currentName = meta.displayName() ?: Component.text(item.type.name)
-                meta.displayName(Component.text("Found: ").append(currentName).color(NamedTextColor.GREEN))
-                meta.setEnchantmentGlintOverride(true)
-            }
-            SelectableItem(
-                selectedItem = selectedItem,
-                deselectedItem = item,
-                isSelected = selectedItems[index],
-                inventory = this.inventory,
-                pos = index
-            ) { selected, player ->
-                selectedItems[index] = selected
-                inventory.setItem(index, if (selected) selectedItem else item)
 
-                itemFound(player, ItemHuntTeam.getTeam(player), item)
-                if (GameData.deleteItemWhenFound)
-                    removeItem(player, item.type)
-                ItemHuntTeam.getTeam(player)?.addScore(1)
-                ItemHuntTeam.getTeam(player)?.broadcastMessage("${player.name} found ${item.type.name}")
+            if (index < items.size) {
+
+                val item = items[index]
+                val selectedItem = item.clone()
+
+                selectedItem.editMeta { meta ->
+                    val currentName = meta.displayName() ?: Component.text(item.type.name)
+                    meta.displayName(Component.text("Found: ").append(currentName).color(NamedTextColor.GREEN))
+                    meta.setEnchantmentGlintOverride(true)
+                }
+
+                SelectableItem(
+                    selectedItem = selectedItem,
+                    deselectedItem = item,
+                    isSelected = selectedItems[index],
+                    inventory = this.inventory,
+                    pos = index
+                ) { selected, player ->
+                    selectedItems[index] = selected
+                    inventory.setItem(index, if (selected) selectedItem else item)
+
+                    itemFound(player, ItemHuntTeam.getTeam(player), item)
+                }
+                inventory.setItem(index, item)
+            } else {
+                val item = ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE)
+                item.editMeta {
+                    it.displayName(Component.text("Empty").color(NamedTextColor.GRAY))
+                }
+                ClickableItem(
+                    inventory = this.inventory,
+                    pos = index,
+                    displayItem = {item}
+                ) { _, _ -> }
             }
-            inventory.setItem(index, item)
         }
     }
 
