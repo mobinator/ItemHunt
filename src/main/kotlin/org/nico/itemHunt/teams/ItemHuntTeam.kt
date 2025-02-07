@@ -4,11 +4,13 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scoreboard.*
 import org.nico.itemHunt.ItemHunt
+import org.nico.itemHunt.game.data.GameData
 import org.nico.itemHunt.game.items.HuntItem
 import org.nico.itemHunt.inventories.ItemList
 import org.nico.itemHunt.tasks.ItemTestScheduler
@@ -127,9 +129,9 @@ class ItemHuntTeam(
 
     fun itemFound(player: Player? = null) {
         player?.sendMessage("${player.name} has found the item")
-        nextItem()
+        if (!GameData.listMode)
+            nextItem()
         updateDisplayName()
-        println(score)
     }
 
     fun updateDisplayName() {
@@ -155,6 +157,12 @@ class ItemHuntTeam(
         resetScore()
         updateDisplayName()
         schedules.forEach { it.item = ItemStack.of(Material.BEDROCK) }
+    }
+
+    fun playSound(sound: Sound, volume: Float, pitch: Float) {
+        players.forEach { player ->
+            player.playSound(player.location, sound, volume, pitch)
+        }
     }
 
     companion object {
