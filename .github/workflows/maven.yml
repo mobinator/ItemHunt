@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*'   # Löst den Workflow bei jedem Tag aus, der mit "v" beginnt (z.B. v1.0.0)
+      - 'v*'  # Löst den Workflow aus, wenn ein Tag, der mit "v" beginnt (z. B. v1.0.0), gepusht wird
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
         run: mvn clean package
 
       - name: Artifact hochladen
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: jar-artifact
           path: target/*.jar
@@ -32,12 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Artifact herunterladen
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@vv4.6.0
         with:
           name: jar-artifact
 
       - name: GitHub Release erstellen und JAR anhängen
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ github.ref }}       # Nutzt den Tag, der den Workflow ausgelöst hat
-          files: '*.jar'               # Fügt alle .jar-Dateien im aktuellen Verzeichnis als Release-Asset hinzu
+          tag: ${{ github.ref }}
+          files: '*.jar'
