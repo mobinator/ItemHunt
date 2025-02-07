@@ -58,8 +58,6 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
             }
         }
 
-        GameData.currentGamePhase = GamePhase.PLAYING
-
         gameTimer = GameTimer(plugin)
         gameTimer.start()
     }
@@ -101,6 +99,8 @@ class GameEventListener(private val plugin: ItemHunt) : Listener {
         }
         Bukkit.getPluginManager().registerEvents(lobbyManager, plugin)
         gameTimer.reset()
+
+
     }
 
     @EventHandler
