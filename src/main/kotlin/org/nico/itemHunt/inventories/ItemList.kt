@@ -14,7 +14,7 @@ import kotlin.math.ceil
 
 class ItemList(items: List<ItemStack>) : InventoryHolder {
 
-    private val size = ceil((45 % items.size) / 9f) * 9
+    private val size = ceil(items.size / 9f) * 9
     private var inventory: Inventory = Bukkit.createInventory(
         this,
         size.toInt(),

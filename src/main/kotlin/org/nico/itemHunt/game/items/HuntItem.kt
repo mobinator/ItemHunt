@@ -39,7 +39,7 @@ object HuntItem {
 
             val pools = itemPools.filterIndexed { index, _ -> GameData.selectedItemPools[index] > 0 }
 
-            ItemStack.of(weightedRandomItem(pools, GameData.selectedItemPools))
+            ItemStack.of(weightedRandomItem(pools, GameData.selectedItemPools.filterIndexed { index, _ -> GameData.selectedItemPools[index] > 0 }))
         } else {
 
             val randomIndex = Random.nextInt(materials.size)
@@ -52,14 +52,22 @@ object HuntItem {
     }
 
     private fun weightedRandomItem(list: List<ItemPool>, weights: List<Int>): Material {
-        val totalweight = weights.sum()
-        var rand = Random.nextInt(totalweight)
-        weights.forEachIndexed() { index, it ->
-            rand -= it
-            if (rand <= 0) {
-                return list[index].getRandomItem()
+        try {
+            val totalWeight = weights.sum()
+            var rand = Random.nextInt(totalWeight)
+            weights.forEachIndexed { index, weight ->
+                if (rand <= weight) {
+                    if (index < list.size)
+                        return list[index].getRandomItem()
+                    else
+                        return list.last().getRandomItem()
+                }
+                rand -= weight
             }
+        } catch (e: Exception) {
+            println("Error in weightedRandomItem")
         }
-        return list.random().getRandomItem()
+
+        return list.last().getRandomItem()
     }
 }

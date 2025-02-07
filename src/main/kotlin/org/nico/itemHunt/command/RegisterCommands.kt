@@ -15,7 +15,9 @@ class RegisterCommands : PluginBootstrap {
             commands.registrar().register("game_settings", SettingsCommand())
             commands.registrar().register("skip_item", SkipItem())
             commands.registrar().register("backpack", Backpack())
+            commands.registrar().register("bp", Backpack())
             commands.registrar().register("item_list", ItemList())
+            commands.registrar().register("il", ItemList())
         }
     }
 }
